@@ -25,13 +25,13 @@ use ieee.std_logic_arith.all;
 entity if_stage is
 	port(
 		CLK		: in std_logic;
-		RST_n		: in std_logic;	-- Synchronous reset
-		PC_EN		: in std_logic;	-- Program counter register enable
-		PC_JP		: in std_logic_vector (31 downto 0);
-		IM_IN		: out std_logic_vector (31 downto 0);
+		RST_n	: in std_logic;	-- Synchronous reset
+		PC_EN	: in std_logic;	-- Program counter register enable
+		PC_JP	: in std_logic_vector (31 downto 0);
+		IM_IN	: out std_logic_vector (31 downto 0);
 		IM_OUT	: in std_logic_vector(31 downto 0);
-		INSTR		: out std_logic_vector(31 downto 0);
-		PC			: buffer std_logic_vector(31 downto 0);
+		INSTR	: out std_logic_vector(31 downto 0);
+		PC		: buffer std_logic_vector(31 downto 0);
 		PC_SEL	: in std_logic
 	);
 end if_stage;
