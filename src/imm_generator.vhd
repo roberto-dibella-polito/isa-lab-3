@@ -10,7 +10,6 @@ use work.riscv_lite_instructions.all;
 entity imm_gen is
 	port(
 		INSTR 		: in std_logic_vector(31 downto 0);
-		TO_ALU_CTRL : out std_logic_vector(3 downto 0);
 		IMM			: out std_logic_vector(31 downto 0)
 	);
 end imm_gen;
@@ -29,6 +28,7 @@ begin
 		
 		variable immediate : signed(11 downto 0);
 		variable long_immediate	: signed(19 downto 0);
+		variable left_shift : signed(11 downto 0) := (others => '0');
 	
 	begin
 		
@@ -48,7 +48,7 @@ begin
 		elsif( (opcode = LUI_OP) or (opcode = AUIPC_OP) ) then
 		
 			long_immediate := signed(INSTR(31 downto 12));
-			IMM <= std_logic_vector(resize(long_immediate, 32));
+			IMM <= std_logic_vector(long_immediate & left_shift);
 			
 		-- J-type
 		elsif( opcode = JAL_OP ) then
@@ -69,7 +69,5 @@ begin
 		end if;
 		
 	end process;
-	
-	TO_ALU_CTRL <= INSTR(30) & INSTR(14 downto 12);
 	
 end bhv;
