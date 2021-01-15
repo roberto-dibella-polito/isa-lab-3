@@ -5,7 +5,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity mem_stage is
+entity wb_stage is
 	port(
 		PC_IN 		: in std_logic_vector(31 downto 0);
 		DATA_RD		: in std_logic_vector(31 downto 0);
@@ -13,7 +13,7 @@ entity mem_stage is
 		WB_SEL		: in std_logic_vector(1 downto 0);
 		DATA_WB		: out std_logic_vector(31 downto 0);
 	);
-end mem_stage;
+end wb_stage;
 
 architecture structure of mem_stage is
 

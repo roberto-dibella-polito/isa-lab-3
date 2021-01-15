@@ -18,7 +18,7 @@ entity id_stage is
 		DATA1_OUT		: out std_logic_vector(31 downto 0);
 		DATA2_OUT		: out std_logic_vector(31 downto 0);
 		IMMEDIATE		: out std_logic_vector(31 downto 0);
-		OPCODE			: out std_logic_vector(6 downto 0);
+		OPCODE			: out std_logic_vector(4 downto 0);
 		ALU_CTRL		: out std_logic_vector(2 downto 0);
 		CLK				: in std_logic;
 		RST_n			: in std_logic
@@ -77,7 +77,7 @@ begin
 	
 	ALU_CTRL 	<= instruction(14 downto 12);
 	RD_OUT 		<= instruction(11 downto 7);
-	OPCODE 		<= instruction(6 downto 0);
+	OPCODE 		<= instruction(6 downto 2);
 	
 	imm_generator: imm_gen port map
 	(
