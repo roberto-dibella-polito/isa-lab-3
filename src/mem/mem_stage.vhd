@@ -23,7 +23,7 @@ entity mem_stage is
 		MEM_IN	: out std_logic_vector(31 downto 0);
 		MEM_ADDR: out std_logic_vector(31 downto 0);
 		MEM_OUT : in std_logic_vector(31 downto 0);
-		MEM_EN	: out std_logic;
+		MEM_EN	: out std_logic
 	);
 end mem_stage;
 
@@ -34,7 +34,7 @@ begin
 	-- Memory connections
 	MEM_ADDR <= ALU_OUT;
 	MEM_IN <= DATA_WR;
-	MEM_OUT <= DATA_RD;
+	DATA_RD <= MEM_OUT;
 	MEM_EN <= WR_EN;
 	
 	-- Forwarding

@@ -1,0 +1,66 @@
+Running PRESTO HDLC
+
+Inferred memory devices in process
+	in routine risc_v_dp line 186 in file
+		'../src/risc_v.vhd'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    id_pc_in_reg     | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine risc_v_dp line 233 in file
+		'../src/risc_v.vhd'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    ex_imm_in_reg    | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    ex_pc_in_reg     | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   ex_data1_in_reg   | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   ex_data2_in_reg   | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+| ex_alu_ctrl_in_reg  | Flip-flop |   3   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    ex_rd_in_reg     | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine risc_v_dp line 292 in file
+		'../src/risc_v.vhd'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    mem_rd_in_reg    | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    mem_pc_in_reg    | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   mem_alu_in_reg    | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   mem_data_in_reg   | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine risc_v_dp line 348 in file
+		'../src/risc_v.vhd'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    wb_rd_out_reg    | Flip-flop |   5   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    wb_pc_in_reg     | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|   wb_data_in_reg    | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    wb_fwd_in_reg    | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Warning: Overwriting design file '/home/isa32/DELIVER/isa-lab-3/syn/risc_v_dp.db'. (DDB-24)
+Elaborated 1 design.
+Current design is now 'risc_v_dp'.
+Information: Building the design 'PC_ALU'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'alu_cu'. (HDL-193)
+
+Statistics for case statements in always block at line 21 in file
+	'../src/ex/alu_ctrl.vhd'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            26            |    auto/auto     |
+|            33            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+1

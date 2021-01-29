@@ -41,7 +41,7 @@ entity risc_v_dp is
 		MEM_EN		: out std_logic;
 		
 		-- WB stage controls
-		WB_SEL		: in std_logic_vector(1 downto 0);
+		WB_SEL		: in std_logic_vector(1 downto 0)
 		
 	);
 end risc_v_dp;
@@ -86,7 +86,7 @@ architecture structure of risc_v_dp is
 			DATA1_OUT		: out std_logic_vector(31 downto 0);
 			DATA2_OUT		: out std_logic_vector(31 downto 0);
 			IMMEDIATE		: out std_logic_vector(31 downto 0);
-			OPCODE			: out std_logic_vector(6 downto 0);
+			OPCODE			: out std_logic_vector(4 downto 0);
 			ALU_CTRL		: out std_logic_vector(2 downto 0);
 			CLK				: in std_logic;
 			RST_n			: in std_logic
@@ -127,7 +127,7 @@ architecture structure of risc_v_dp is
 			MEM_IN	: out std_logic_vector(31 downto 0);
 			MEM_ADDR: out std_logic_vector(31 downto 0);
 			MEM_OUT : in std_logic_vector(31 downto 0);
-			MEM_EN	: out std_logic;
+			MEM_EN	: out std_logic
 		);
 	end component;
 	
@@ -137,7 +137,7 @@ architecture structure of risc_v_dp is
 			DATA_RD		: in std_logic_vector(31 downto 0);
 			DATA_FWD	: in std_logic_vector(31 downto 0);
 			WB_SEL		: in std_logic_vector(1 downto 0);
-			DATA_WB		: out std_logic_vector(31 downto 0);
+			DATA_WB		: out std_logic_vector(31 downto 0)
 		);
 	end component;
 	
@@ -188,13 +188,13 @@ begin
 		
 		if ASYNC_RST_N = '0' then
 		
-			if_pc_out 	<= (others=>'0');
+			id_pc_in 	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
 			if rst_n = '0' then
-				if_pc_out 	<= (others=>'0');
+				id_pc_in 	<= (others=>'0');
 			else
-				if_pc_out 	<= id_pc_in;
+				id_pc_in 	<= if_pc_out;
 			end if;
 		end if;
 	end process;
@@ -240,6 +240,7 @@ begin
 			ex_data2_in <= (others=>'0');
 			ex_alu_ctrl_in <= (others=>'0');
 			ex_rd_in <= (others=>'0');
+			ex_imm_in <= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
 			if rst_n = '0' then
@@ -248,12 +249,14 @@ begin
 				ex_data2_in		<= (others=>'0');
 				ex_alu_ctrl_in 	<= (others=>'0');
 				ex_rd_in 		<= (others=>'0');
+				ex_imm_in <= (others=>'0');
 			else
 				ex_pc_in 		<= id_pc_out;
 				ex_data1_in 	<= id_data1_out;
 				ex_data2_in 	<= id_data2_out;
 				ex_alu_ctrl_in 	<= id_alu_ctrl_out;
 				ex_rd_in 		<= id_rd_out;
+				ex_imm_in 		<= id_imm_out;
 			end if;
 		end if;
 	end process;
@@ -366,6 +369,18 @@ begin
 			end if;
 		end if;
 	end process;
+
+	-----------------------------------------------------
+	-- WB STAGE
+	-----------------------------------------------------
+
+	write_back: wb_stage port map
+	(	PC_IN 		=> wb_pc_in,
+		DATA_RD		=> wb_data_in,
+		DATA_FWD	=> wb_fwd_in,
+		WB_SEL		=> WB_SEL,
+		DATA_WB		=> wb_data_out
+	);
 
 end structure;
 	
