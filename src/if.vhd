@@ -12,7 +12,7 @@
 -- IM_IN : port connector to the input port of the Instruction Memory
 -- IM_OUT: port connector to the output port of the Instruction Memory
 -- INSTR : Output connecting the instruction memory to the output
--- PC		: Program counter output
+-- PC	 : Program counter output
 -- PC_SEL: Program counter selector signal
 -----------------------------------------------------------------------
 

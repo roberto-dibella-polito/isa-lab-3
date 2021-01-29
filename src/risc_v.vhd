@@ -12,6 +12,7 @@ entity risc_v_dp is
 	(	
 		CLK			: in std_logic;
 		RST_n		: in std_logic;
+		ASYNC_RST_N	: in std_logic;
 		
 		-- IF stage controls
 		PC_EN		: in std_logic;
@@ -22,7 +23,7 @@ entity risc_v_dp is
 		IM_OUT		: in std_logic_vector(31 downto 0);
 
 		-- ID stage controls
-		WR_EN		: in std_logic;
+		ID_WR_EN	: in std_logic;
 		OPCODE		: out std_logic_vector(4 downto 0);
 		
 		-- EX stage controls
@@ -31,7 +32,7 @@ entity risc_v_dp is
 		ZERO		: out std_logic;
 		
 		-- MEM stage controls
-		WR_EN		: in std_logic;
+		MEM_WR_EN	: in std_logic;
 		
 		-- Memory interface
 		MEM_IN		: out std_logic_vector(31 downto 0);
@@ -46,6 +47,17 @@ entity risc_v_dp is
 end risc_v_dp;
 
 architecture structure of risc_v_dp is
+
+	component reg_n 
+		generic( N : integer := 8 );
+		port
+		(	clk			: in std_logic;
+			rst_n 		: in std_logic;
+			async_rst_n : in std_logic;
+			D			: in std_logic_vector(N-1 downto 0);
+			Q			: out std_logic_vector(N-1 downto 0)
+		);
+	end component;
 
 	component if_stage
 		port
@@ -66,7 +78,7 @@ architecture structure of risc_v_dp is
 		(	PC_IN			: in std_logic_vector(31 downto 0);
 			PC_OUT			: out std_logic_vector(31 downto 0);
 			INSTR_IN		: in std_logic_vector(31 downto 0);
-			INSTR_OUT		: out std_logic_vector(31 downto 0);
+			--INSTR_OUT		: out std_logic_vector(31 downto 0);
 			RD_OUT			: out std_logic_vector(4 downto 0);
 			RD_IN			: in std_logic_vector(4 downto 0);
 			DATA_WR_BACK	: in std_logic_vector(31 downto 0);
@@ -86,7 +98,7 @@ architecture structure of risc_v_dp is
 		(	PC_IN 		: in std_logic_vector(31 downto 0);
 			D1			: in std_logic_vector(31 downto 0);
 			D2			: in std_logic_vector(31 downto 0);
-			D2_FORWARD	: out std_logic_vector(31 downto 0);
+			D2_FWD		: out std_logic_vector(31 downto 0);
 			IMM			: in std_logic_vector(31 downto 0);
 			IMM_OP		: in std_logic;
 			ALU_OP		: in std_logic_vector(1 downto 0);
@@ -130,36 +142,230 @@ architecture structure of risc_v_dp is
 	end component;
 	
 	
-	signal instr0, instr1, pc0, pc1, pc2 : std_logic_vector(31 downto 0);
+	signal if_id_instr, if_pc_out : std_logic_vector(31 downto 0);
+	
+	signal id_pc_in, id_pc_out, id_data1_out, id_data2_out, id_imm_out : std_logic_vector(31 downto 0);
+	signal id_rd_out : std_logic_vector(4 downto 0);
+	signal id_alu_ctrl_out: std_logic_vector(2 downto 0);
+	
+	signal ex_pc_in, ex_pc_out, ex_data1_in, ex_data2_in, ex_imm_in, ex_alu_out, ex_fwd_out : std_logic_vector(31 downto 0);
+	signal ex_alu_ctrl_in : std_logic_vector(2 downto 0);
+	signal ex_rd_in, ex_rd_out : std_logic_vector(4 downto 0);
+	
+	signal mem_rd_in, mem_rd_out : std_logic_vector(4 downto 0);
+	signal mem_pc_in, mem_pc_out, mem_data_out, mem_fwd_out, mem_alu_in, mem_data_in : std_logic_vector(31 downto 0);
 
+	
+	signal wb_data_out, wb_pc_in, wb_data_in, wb_fwd_in : std_logic_vector(31 downto 0);
+	signal wb_rd_out : std_logic_vector(4 downto 0);
+	
 begin
+	
+	----------------------------------------------------
+	-- INSTRUCTION FETCH STAGE
+	----------------------------------------------------
 
 	instr_fetch: if_stage port map 
 	(	CLK		=> CLK,
 		RST_n	=> RST_n,
 		PC_EN	=> PC_EN,
-		PC_JP	=> PC_JP,
+		PC_JP	=> ex_pc_out,
 		IM_IN	=> IM_IN,
 		IM_OUT	=> IM_OUT,
-		INSTR	=> instr0,
-		PC		=> pc0,
+		INSTR	=> if_id_instr,
+		PC		=> if_pc_out,
 		PC_SEL	=> PC_SEL
 	);
 	
+	-----------------------------------------------------
+	-- IF-ID PIPELINING
+	-- INSTR is internally pipelined in ID
+	-- Signal to be pipelined: PC
+	-----------------------------------------------------
+	
+	if_id_pp: process(CLK, ASYNC_RST_N)
+	begin
+		
+		if ASYNC_RST_N = '0' then
+		
+			if_pc_out 	<= (others=>'0');
+		
+		elsif (clk'event and clk ='1') then
+			if rst_n = '0' then
+				if_pc_out 	<= (others=>'0');
+			else
+				if_pc_out 	<= id_pc_in;
+			end if;
+		end if;
+	end process;
+
+	-----------------------------------------------------
+	-- INSTRUCTION DECODE STAGE
+	-----------------------------------------------------
+	
 	instr_decode: id_stage port map
-	(	PC_IN			=> pc0,
-		PC_OUT			=> PC_OUT,
-		INSTR_IN		=> instr0,
-		INSTR_OUT		=> INSTR_OUT,
-		DATA_WR_BACK	=> WR_BACK,
-		WR_EN			=> WR_EN,
-		DATA1_OUT		=> DATA_RS1,
-		DATA2_OUT		=> DATA_RS2,
-		IMMEDIATE		=> IMMEDIATE,
-		ALU_CTRL		=> ALU_CTRL,
-		CLK			=> CLK,		
+	(	PC_IN			=> id_pc_in,
+		PC_OUT			=> id_pc_out,
+		INSTR_IN		=> if_id_instr,
+		RD_OUT			=> id_rd_out,
+		RD_IN			=> wb_rd_out,
+		DATA_WR_BACK	=> wb_data_out,
+		WR_EN			=> ID_WR_EN,
+		DATA1_OUT		=> id_data1_out,
+		DATA2_OUT		=> id_data2_out,
+		IMMEDIATE		=> id_imm_out,
+		OPCODE			=> OPCODE,
+		ALU_CTRL		=> id_alu_ctrl_out,
+		CLK				=> CLK,
 		RST_n			=> RST_n
 	);
 	
+	-----------------------------------------------------
+	-- ID-EX PIPELINING
+	-- Signal to be pipelined: 	PC_OUT
+	--							DATA1_OUT 
+	-- 							DATA2_OUT
+	--							IMMEDIATE
+	--							ALU_CTRL
+	--							RD_OUT
+	-----------------------------------------------------
+	
+	id_ex_pp: process(CLK, ASYNC_RST_N)
+	begin
+		
+		if ASYNC_RST_N = '0' then
+		
+			ex_pc_in <= (others=>'0');
+			ex_data1_in <= (others=>'0');
+			ex_data2_in <= (others=>'0');
+			ex_alu_ctrl_in <= (others=>'0');
+			ex_rd_in <= (others=>'0');
+		
+		elsif (clk'event and clk ='1') then
+			if rst_n = '0' then
+				ex_pc_in 		<= (others=>'0');
+				ex_data1_in 	<= (others=>'0');
+				ex_data2_in		<= (others=>'0');
+				ex_alu_ctrl_in 	<= (others=>'0');
+				ex_rd_in 		<= (others=>'0');
+			else
+				ex_pc_in 		<= id_pc_out;
+				ex_data1_in 	<= id_data1_out;
+				ex_data2_in 	<= id_data2_out;
+				ex_alu_ctrl_in 	<= id_alu_ctrl_out;
+				ex_rd_in 		<= id_rd_out;
+			end if;
+		end if;
+	end process;
+	
+	-----------------------------------------------------
+	-- EXECUTION STAGE
+	-----------------------------------------------------
+	
+	execute: ex_stage port map
+	(	PC_IN 		=> ex_pc_in,
+		D1			=> ex_data1_in,
+		D2			=> ex_data2_in,
+		D2_FWD		=> ex_fwd_out,
+		IMM			=> ex_imm_in,
+		IMM_OP		=> IMM_OP,
+		ALU_OP		=> ALU_OP,
+		FUNC3		=> ex_alu_ctrl_in,
+		ALU_OUT		=> ex_alu_out,
+		PC_OUT		=> ex_pc_out,
+		RD_IN		=> ex_rd_in,
+		RD_OUT		=> ex_rd_out,
+		ZERO		=> ZERO
+	); 
+	
+	-----------------------------------------------------
+	-- EX-MEM PIPELINING
+	-- Signal to be pipelined: 	PC_OUT
+	--							ALU_OUT 
+	-- 							D2_FWD
+	--							RD_OUT
+	-----------------------------------------------------
+	
+	ex_mem_pp: process(CLK, ASYNC_RST_N)
+	begin
+		
+		if ASYNC_RST_N = '0' then
+		
+			mem_pc_in 	<= (others=>'0');
+			mem_alu_in 	<= (others=>'0');
+			mem_data_in <= (others=>'0');
+			mem_rd_in 	<= (others=>'0');
+		
+		elsif (clk'event and clk ='1') then
+			if rst_n = '0' then
+				mem_pc_in 	<= (others=>'0');
+				mem_alu_in 	<= (others=>'0');
+				mem_data_in <= (others=>'0');
+				mem_rd_in 	<= (others=>'0');
+			else
+				mem_pc_in 	<= ex_pc_out;
+				mem_alu_in 	<= ex_alu_out;
+				mem_data_in <= ex_fwd_out;
+				mem_rd_in 	<= ex_rd_out;
+			end if;
+		end if;
+	end process;
+
+	-----------------------------------------------------
+	-- MEMORY STAGE
+	-----------------------------------------------------
+	
+	memory: mem_stage port map 
+	(	ALU_OUT => mem_alu_in,
+		FORWARD	=> mem_fwd_out,
+		DATA_WR	=> mem_data_in,
+		WR_EN	=> MEM_WR_EN,
+		DATA_RD	=> mem_data_out,
+		
+		PC_IN	=> mem_pc_in,
+		PC_OUT	=> mem_pc_out,
+		
+		RD_IN	=> mem_rd_in,
+		RD_OUT	=> mem_rd_out,
+		
+		-- Memory interface
+		MEM_IN	=> MEM_IN,
+		MEM_ADDR=> MEM_ADDR,
+		MEM_OUT => MEM_OUT,
+		MEM_EN	=> MEM_EN
+	);
+
+	-----------------------------------------------------
+	-- MEM-WB PIPELINING
+	-- Signal to be pipelined: 	PC_OUT
+	--							DATA_RD 
+	-- 							FORWARD
+	-----------------------------------------------------
+	
+	mem_wb_pp: process(CLK, ASYNC_RST_N)
+	begin
+		
+		if ASYNC_RST_N = '0' then
+		
+			wb_pc_in 	<= (others=>'0');
+			wb_data_in 	<= (others=>'0');
+			wb_fwd_in 	<= (others=>'0');
+			wb_rd_out	<= (others=>'0');
+		
+		elsif (clk'event and clk ='1') then
+			if rst_n = '0' then
+				wb_pc_in 	<= (others=>'0');
+				wb_data_in 	<= (others=>'0');
+				wb_fwd_in 	<= (others=>'0');
+				wb_rd_out	<= (others=>'0');
+			else
+				wb_pc_in 	<= mem_pc_out;
+				wb_data_in 	<= mem_data_out;
+				wb_fwd_in 	<= mem_fwd_out;
+				wb_rd_out	<= mem_rd_out;
+			end if;
+		end if;
+	end process;
+
 end structure;
 	

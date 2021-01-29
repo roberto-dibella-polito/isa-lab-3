@@ -10,7 +10,7 @@ entity id_stage is
 	(	PC_IN			: in std_logic_vector(31 downto 0);
 		PC_OUT			: out std_logic_vector(31 downto 0);
 		INSTR_IN		: in std_logic_vector(31 downto 0);
-		INSTR_OUT		: out std_logic_vector(31 downto 0);
+		--INSTR_OUT		: out std_logic_vector(31 downto 0);
 		RD_OUT			: out std_logic_vector(4 downto 0);
 		RD_IN			: in std_logic_vector(4 downto 0);
 		DATA_WR_BACK	: in std_logic_vector(31 downto 0);
@@ -77,7 +77,7 @@ begin
 	
 	ALU_CTRL 	<= instruction(14 downto 12);
 	RD_OUT 		<= instruction(11 downto 7);
-	OPCODE 		<= instruction(6 downto 2);
+	OPCODE 		<= INSTR_IN(6 downto 2);
 	
 	imm_generator: imm_gen port map
 	(
@@ -95,7 +95,7 @@ begin
 	--	end if;
 	--end process;
 	
-	INSTR_OUT <= instruction;
+	--INSTR_OUT <= instruction;
 	PC_OUT <= PC_IN;
 
 end bhv;

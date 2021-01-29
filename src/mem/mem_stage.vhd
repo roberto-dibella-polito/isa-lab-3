@@ -11,11 +11,13 @@ entity mem_stage is
 		FORWARD	: out std_logic_vector(31 downto 0);
 		DATA_WR	: in std_logic_vector(31 downto 0);
 		WR_EN	: in std_logic;
-		RD_IN	: in std_logic_vector(4 downto 0);
-		RD_OUT	: out std_logic_vector(4 downto 0);
+		DATA_RD	: out std_logic_vector(31 downto 0);
+		
 		PC_IN	: in std_logic_vector(31 downto 0);
 		PC_OUT	: out std_logic_vector(31 downto 0);
-		DATA_RD	: out std_logic_vector(31 downto 0);
+		
+		RD_IN	: in std_logic_vector(4 downto 0);
+		RD_OUT	: out std_logic_vector(4 downto 0);
 		
 		-- Memory interface
 		MEM_IN	: out std_logic_vector(31 downto 0);
