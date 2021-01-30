@@ -5,7 +5,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use work.riscv_lite_alu_ctrl.all;
 
 entity ALU is
 	port
@@ -46,9 +45,9 @@ begin
 	
 	-- Zero flag
 	-- Used for BEQ -> ALU_CTRL 100
-	zero_flag: process(adder_out)
+	zero_flag: process(ALU_CTRL)
 	begin
-		if unsigned(adder_out) = 0 then
+		if adder_out = (others=>'0') then
 			ZERO <= '1';
 		else
 			ZERO <= '0';

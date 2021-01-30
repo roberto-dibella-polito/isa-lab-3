@@ -8,6 +8,7 @@ use ieee.numeric_std.all;
 entity id_stage is
 	port
 	(	PC_IN			: in std_logic_vector(31 downto 0);
+		PC_4_IN			: in std_logic_vector(31 downto 0);
 		PC_OUT			: out std_logic_vector(31 downto 0);
 		INSTR_IN		: in std_logic_vector(31 downto 0);
 		--INSTR_OUT		: out std_logic_vector(31 downto 0);
@@ -20,6 +21,9 @@ entity id_stage is
 		IMMEDIATE		: out std_logic_vector(31 downto 0);
 		OPCODE			: out std_logic_vector(4 downto 0);
 		ALU_CTRL		: out std_logic_vector(2 downto 0);
+		
+		RD_JAL			: in std_logic;
+		
 		CLK				: in std_logic;
 		RST_n			: in std_logic
 	);
@@ -50,14 +54,29 @@ architecture bhv of id_stage is
 	
 	signal instruction,progcount : std_logic_vector(31 downto 0);
 	signal rd_pipeline : std_logic_vector(4 downto 0);
+	signal regfile_data_in : std_logic_vector(31 downto 0); 
 	
 begin	
+
+	-- INPUT MUX
+	-- To choose between regular instructions and JAL
+	
+	mux : process(DATA_WR_BACK,PC_4_IN,RD_JAL)
+	begin
+		if RD_JAL = '1' then
+			regfile_data_in <= PC_4_IN;
+		else
+			regfile_data_in <= DATA_WR_BACK;
+		end if;
+	end process;
+	
+	-- Register File
 	
 	memory: regfile port map
 	(	RS1			=> INSTR_IN(19 downto 15),
 		RS2			=> INSTR_IN(24 downto 20),
 		RD			=> RD_IN,
-		DATA_IN		=> DATA_WR_BACK,
+		DATA_IN		=> regfile_data_in,
 		WR_EN		=> WR_EN,
 		DATA1_OUT	=> DATA1_OUT,
 		DATA2_OUT	=> DATA2_OUT,

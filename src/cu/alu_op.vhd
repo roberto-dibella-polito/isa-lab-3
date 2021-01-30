@@ -10,6 +10,5 @@ constant ALU_AND 		: std_logic_vector(2 downto 0) := "001";
 constant ALU_XOR 		: std_logic_vector(2 downto 0) := "010";
 constant ALU_SHIFT 		: std_logic_vector(2 downto 0) := "011";
 constant ALU_COMPARE	: std_logic_vector(2 downto 0) := "100";
-constant ALU_LUI 		: std_logic_vector(2 downto 0) := "101";
 
 end riscv_lite_alu_ctrl;

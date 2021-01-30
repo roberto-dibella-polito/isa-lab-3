@@ -42,7 +42,7 @@ entity risc_v_dp is
 		MEM_EN		: out std_logic;
 		
 		-- WB stage controls
-		WB_SEL		: in std_logic_vector(1 downto 0)
+		WB_SEL		: in std_logic_vector(1 downto 0);
 		
 	);
 end risc_v_dp;
@@ -70,7 +70,6 @@ architecture structure of risc_v_dp is
 			IM_OUT	: in std_logic_vector(31 downto 0);
 			INSTR	: out std_logic_vector(31 downto 0);
 			PC		: buffer std_logic_vector(31 downto 0);
-			PC_4		: out std_logic_vector(31 downto 0);
 			PC_SEL	: in std_logic
 		);
 	end component;
@@ -137,7 +136,7 @@ architecture structure of risc_v_dp is
 			MEM_IN	: out std_logic_vector(31 downto 0);
 			MEM_ADDR: out std_logic_vector(31 downto 0);
 			MEM_OUT : in std_logic_vector(31 downto 0);
-			MEM_EN	: out std_logic
+			MEM_EN	: out std_logic;
 		);
 	end component;
 	
@@ -148,7 +147,7 @@ architecture structure of risc_v_dp is
 			DATA_FWD	: in std_logic_vector(31 downto 0);
 			IMM_IN		: in std_logic_vector(31 downto 0);
 			WB_SEL		: in std_logic_vector(1 downto 0);
-			DATA_WB		: out std_logic_vector(31 downto 0)
+			DATA_WB		: out std_logic_vector(31 downto 0);
 		);
 	end component;
 	
@@ -185,7 +184,6 @@ begin
 		IM_OUT	=> IM_OUT,
 		INSTR	=> if_id_instr,
 		PC		=> if_pc_out,
-		PC_4		=> if_pc4_out_1,
 		PC_SEL	=> PC_SEL
 	);
 	
@@ -209,7 +207,7 @@ begin
 				if_pc4_out2	<= (others=>'0');
 			else
 				id_pc_in 	<= if_pc_out;
-				if_pc4_out2	<= if_pc4_out_1;
+				if_pc4_out2	<= if_pc4_out1;
 			end if;
 		end if;
 	end process;
@@ -218,7 +216,7 @@ begin
 	begin
 		if ASYNC_RST_N = '0' then
 
-			id_pc_4_in	<= (others=>'0');
+			id_pc4_in	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
 			if rst_n = '0' then
@@ -406,7 +404,7 @@ begin
 				wb_data_in 	<= mem_data_out;
 				wb_fwd_in 	<= mem_fwd_out;
 				wb_rd_out	<= mem_rd_out;
-				wb_imm_in	<= mem_imm_out;
+				wb_imm_in	<= mem_imm_out);
 			end if;
 		end if;
 	end process;

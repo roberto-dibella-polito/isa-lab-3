@@ -46,8 +46,6 @@ begin
 	RD_OUT <= RD_IN;
 	PC_OUT <= PC_IN;
 	
-	IMM_OUT <= IMM_IN;
-	
 end structure;
 	
 	

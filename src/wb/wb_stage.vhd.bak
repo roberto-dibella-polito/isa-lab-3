@@ -30,13 +30,13 @@ begin
 	--sel <= WB_SEL;
 
 	-- Write-back multiplexer
-	mux: process(WB_SEL, PC_IN, DATA_RD, DATA_FWD,IMM_IN)
+	mux: process(WB_SEL, PC_IN, DATA_RD, DATA_FWD)
 	begin
 		case WB_SEL is
 			when "00" => DATA_WB <= DATA_RD;
 			when "01" => DATA_WB <= DATA_FWD;
 			when "10" => DATA_WB <= PC_IN;
-			when others => DATA_WB <= IMM_IN;
+			when others => DATA_WB <= (others => IMM_IN);
 		end case;
 	end process;
 	
