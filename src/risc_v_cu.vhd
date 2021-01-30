@@ -5,6 +5,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.riscv_lite_instructions.all;
+use work.riscv_lite_alu_ctrl.all;
 
 entity risc_v_cu is
 	port
@@ -39,25 +40,25 @@ architecture fsm of risc_v_cu is
 
 	type state_type is (LW,ROTR,IMM,AUIPC,SW,OP,LUI,BEQ,JAL,NOP);
 	
-	signal state, next_state : state_type;
+	signal state, next_state : state_type := NOP;
 
 begin
 
 	-- Next state generation
 	next_state_gen: process(OPCODE)
-		
+	begin
 		case OPCODE is
 			
-			when LW_OP => state <= LW;
-			when ROR_OP => state <= ROTR;
-			when ADDI_OP => state <= IMM;
-			when AUIPC_OP => state <= AUIPC;
-			when SW_OP => state <= SW;
-			when ADD_OP => state <= OP;
-			when LUI_OP => state <= LUI;
-			when BEQ_OP => state <= BEQ;
-			when JAL_OP => state <= JAL;
-			when others => state <= NOP;
+			when LW_OP => next_state <= LW;
+			when ROR_OP => next_state <= ROTR;
+			when ADDI_OP => next_state <= IMM;
+			when AUIPC_OP => next_state <= AUIPC;
+			when SW_OP => next_state <= SW;
+			when ADD_OP => next_state <= OP;
+			when LUI_OP => next_state <= LUI;
+			when BEQ_OP => next_state <= BEQ;
+			when JAL_OP => next_state <= JAL;
+			when others => next_state <= NOP;
 			
 		end case;
 		
@@ -70,7 +71,7 @@ begin
 		if ASYNC_RST_N = '0' then
 			state <= NOP;
 		elsif CLK'event and CLK = '1' then
-			if RST_n = '0' then 
+			if GLOBAL_RST_n = '0' then 
 				state <= NOP;
 			else
 				state <= next_state;
@@ -81,25 +82,8 @@ begin
 	-- Output Generation
 	
 	out_gen: process(state)
-		
+	begin	
 		case state is 
-		
-			when others => -- NOP
-			
-				RST_n		<= '0';
-				--------------------------- IF 
-				PC_EN		<= '1';
-				PC_SEL		<= '0';				
-				--------------------------- ID
-				ID_WR_EN	<= '1';
-				RD_JAL		<= '0';
-				--------------------------- EX
-				IMM_OP		<= '0';
-				ALU_OP		<= ALU_OP_ADD;
-				--------------------------- MEM
-				MEM_WR_EN	<= '0';
-				--------------------------- WB
-				WB_SEL		<= "00";
 		
 			when LW => 
 
@@ -276,7 +260,24 @@ begin
 				--------------------------- WB
 				WB_SEL		<= "11";
 				
-			-- ATTENTION: I should FLUSH the pipeline!
+				-- ATTENTION: I should FLUSH the pipeline!
+
+			when others => -- NOP
+			
+				RST_n		<= '0';
+				--------------------------- IF 
+				PC_EN		<= '1';
+				PC_SEL		<= '0';				
+				--------------------------- ID
+				ID_WR_EN	<= '1';
+				RD_JAL		<= '0';
+				--------------------------- EX
+				IMM_OP		<= '0';
+				ALU_OP		<= ALU_OP_ADD;
+				--------------------------- MEM
+				MEM_WR_EN	<= '0';
+				--------------------------- WB
+				WB_SEL		<= "00";
 				
 		end case;
 		

@@ -51,11 +51,69 @@ architecture bhv of tb_risc_v_cu is
 			RST_n		: in  std_logic;
 			CLK  		: in  std_logic;
 			DATA 		: out std_logic_vector(31 downto 0);
-			ADDRESS		: out std_logic_vector(31 downto 0);
 			END_SIM 	: out std_logic;
 			D_READY		: out std_logic
 		);
 	end component;
 	
-	signal 
+	signal clk, rst_n, g_rst_n, async_rst_n, endsim, pc_en, pc_sel, id_wr_en, rd_jal, imm_op, mem_wr_en, zero, d_ready: std_logic;
+	signal opcode : std_logic_vector(4 downto 0);
+	signal data : std_logic_vector(31 downto 0);
+	signal wb_sel, alu_op : std_logic_vector(1 downto 0);
+
 begin
+
+	clkgen: clk_gen port map
+	(	END_SIM => endsim,
+		CLK     => clk );
+	
+	datamaker: data_maker port map (
+		RST_n		=> g_rst_n,
+		CLK  		=> clk,
+		DATA 		=> data,
+		END_SIM 	=> endsim,
+		D_READY		=> d_ready
+	);
+	
+	dut: risc_v_cu port map
+	(	CLK			=> clk,
+		RST_n		=> rst_n,
+		ASYNC_RST_N	=> async_rst_n,
+		GLOBAL_RST_n=> g_rst_n,
+		
+		-- IF stage controls
+		PC_EN		=> pc_en,
+		PC_SEL		=> pc_sel,
+		
+		-- ID stage controls
+		ID_WR_EN	=> id_wr_en,
+		OPCODE		=> opcode,
+		RD_JAL		=> rd_jal,
+		
+		-- EX stage controls
+		IMM_OP		=> imm_op,
+		ALU_OP		=> alu_op,
+		ZERO		=> zero,
+		
+		-- MEM stage controls
+		MEM_WR_EN	=> mem_wr_en,
+		
+		-- WB stage controls
+		WB_SEL		=> wb_sel
+	);
+	
+	opcode <= data(6 downto 2);
+
+	test: process
+	begin
+		
+		g_rst_n <= '0';
+		async_rst_n <= '0';
+		wait for 4 ns;
+		async_rst_n <= '1';
+		wait for 2 ns;
+		g_rst_n <= '1';
+		wait for 5000 ns;
+	end process;
+
+end bhv;

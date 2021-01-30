@@ -8,9 +8,7 @@
 # //  OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS
 # //  AND IS SUBJECT TO LICENSE TERMS.
 # //
-source "scripts/compilation.tclQ"
-# couldn't read file "scripts/compilation.tclQ": no such file or directory
-source "scripts/compilation.tcl"
+source "scripts/simulation_cu.tcl"
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
@@ -18,74 +16,12 @@ source "scripts/compilation.tcl"
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
-# -- Loading package std_logic_arith
-# -- Compiling entity if_stage
-# -- Compiling architecture bhv of if_stage
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package numeric_std
-# -- Compiling entity regfile
-# -- Compiling architecture bhv of regfile
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package numeric_std
-# -- Loading package riscv_lite_instructions
-# -- Compiling entity imm_gen
-# -- Compiling architecture bhv of imm_gen
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package numeric_std
-# -- Compiling entity id_stage
-# -- Compiling architecture bhv of id_stage
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package numeric_std
-# -- Compiling entity alu
-# -- Compiling architecture bhv of alu
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package numeric_std
-# -- Compiling entity alu_cu
-# -- Compiling architecture structure of alu_cu
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package numeric_std
-# -- Compiling entity pc_alu
-# -- Compiling architecture bhv of pc_alu
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package numeric_std
-# -- Compiling entity ex_stage
-# -- Compiling architecture structure of ex_stage
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package numeric_std
-# -- Compiling entity mem_stage
-# -- Compiling architecture structure of mem_stage
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package numeric_std
-# -- Compiling entity wb_stage
-# -- Compiling architecture structure of wb_stage
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package std_logic_arith
-# -- Compiling entity risc_v_dp
-# -- Compiling architecture structure of risc_v_dp
-# ** Error: ../src/risc_v.vhd(383): Component instantiation statement must have a label.
-# ** Error: ../src/risc_v.vhd(385): VHDL Compiler exiting
+# -- Compiling package riscv_lite_alu_ctrl
+# ** Error: ../src/cu/alu_op.vhd(18): near "constant": expecting: ';'
+# ** Error: ../src/cu/alu_op.vhd(19): near "constant": expecting: ';'
+# ** Error: ../src/cu/alu_op.vhd(21): near "end": expecting: ';'
 # /software/mentor/modelsim_6.2g/linux/vcom failed.
-source "scripts/compilation.tcl"
+source "scripts/simulation_cu.tcl"
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
@@ -93,67 +29,745 @@ source "scripts/compilation.tcl"
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
-# -- Loading package std_logic_arith
-# -- Compiling entity if_stage
-# -- Compiling architecture bhv of if_stage
-# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
-# -- Loading package standard
-# -- Loading package std_logic_1164
-# -- Loading package numeric_std
-# -- Compiling entity regfile
-# -- Compiling architecture bhv of regfile
+# -- Compiling package riscv_lite_alu_ctrl
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
 # -- Loading package numeric_std
 # -- Loading package riscv_lite_instructions
-# -- Compiling entity imm_gen
-# -- Compiling architecture bhv of imm_gen
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# ** Error: ../src/risc_v_cu.vhd(49): near "case": expecting: BEGIN
+# ** Error: ../src/risc_v_cu.vhd(64): near "process": expecting: ';'
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
 # -- Loading package numeric_std
-# -- Compiling entity id_stage
-# -- Compiling architecture bhv of id_stage
+# -- Loading package riscv_lite_instructions
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# ** Error: ../src/risc_v_cu.vhd(57): Case choice (constant "add_op") has already been specified on line 56.
+# ** Error: ../src/risc_v_cu.vhd(73): Cannot read output "rst_n".
+# ** Error: ../src/risc_v_cu.vhd(85): near "case": expecting: BEGIN
+# ** Error: ../src/risc_v_cu.vhd(283): near "process": expecting: ';'
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
 # -- Loading package numeric_std
-# -- Compiling entity alu
-# -- Compiling architecture bhv of alu
+# -- Loading package riscv_lite_instructions
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# ** Error: ../src/risc_v_cu.vhd(57): Case choice (constant "add_op") has already been specified on line 56.
+# ** Error: ../src/risc_v_cu.vhd(85): near "case": expecting: BEGIN
+# ** Error: ../src/risc_v_cu.vhd(283): near "process": expecting: ';'
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
 # -- Loading package numeric_std
-# -- Compiling entity alu_cu
-# -- Compiling architecture structure of alu_cu
+# -- Loading package riscv_lite_instructions
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# ** Error: ../src/risc_v_cu.vhd(85): near "case": expecting: BEGIN
+# ** Error: ../src/risc_v_cu.vhd(283): near "process": expecting: ';'
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
 # -- Loading package numeric_std
-# -- Compiling entity pc_alu
-# -- Compiling architecture bhv of pc_alu
+# -- Loading package riscv_lite_instructions
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# ** Error: ../src/risc_v_cu.vhd(98): (vcom-1136) Unknown identifier "alu_op_add".
+# ** Error: ../src/risc_v_cu.vhd(115): (vcom-1136) Unknown identifier "alu_op_add".
+# ** Error: ../src/risc_v_cu.vhd(132): (vcom-1136) Unknown identifier "alu_op_rotr".
+# ** Error: ../src/risc_v_cu.vhd(149): (vcom-1136) Unknown identifier "alu_op_imm".
+# ** Error: ../src/risc_v_cu.vhd(166): (vcom-1136) Unknown identifier "alu_op_add".
+# ** Error: ../src/risc_v_cu.vhd(183): (vcom-1136) Unknown identifier "alu_op_imm".
+# ** Error: ../src/risc_v_cu.vhd(200): (vcom-1136) Unknown identifier "alu_op_op".
+# ** Error: ../src/risc_v_cu.vhd(217): (vcom-1136) Unknown identifier "alu_op_add".
+# ** Error: ../src/risc_v_cu.vhd(235): (vcom-1136) Unknown identifier "alu_op_add".
+# ** Error: ../src/risc_v_cu.vhd(254): (vcom-1136) Unknown identifier "alu_op_add".
+# ** Error: ../src/risc_v_cu.vhd(273): (vcom-1136) Unknown identifier "alu_op_add".
+# ** Error: ../src/risc_v_cu.vhd(87): OTHERS must be the only choice in the last case statement alternative.
+# ** Error: ../src/risc_v_cu.vhd(42): Nonresolved signal 'state' has multiple sources.
+#   Drivers:
+#     ../src/risc_v_cu.vhd(47):Process next_state_gen
+#        Driven at:
+#           ../src/risc_v_cu.vhd(51)
+#     ../src/risc_v_cu.vhd(67):Process state_transition
+#        Driven at:
+#           ../src/risc_v_cu.vhd(71)
+# ** Error: ../src/risc_v_cu.vhd(284): VHDL Compiler exiting
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
 # -- Loading package numeric_std
-# -- Compiling entity ex_stage
-# -- Compiling architecture structure of ex_stage
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# ** Error: ../src/risc_v_cu.vhd(88): OTHERS must be the only choice in the last case statement alternative.
+# ** Error: ../src/risc_v_cu.vhd(43): Nonresolved signal 'state' has multiple sources.
+#   Drivers:
+#     ../src/risc_v_cu.vhd(48):Process next_state_gen
+#        Driven at:
+#           ../src/risc_v_cu.vhd(52)
+#     ../src/risc_v_cu.vhd(68):Process state_transition
+#        Driven at:
+#           ../src/risc_v_cu.vhd(72)
+# ** Error: ../src/risc_v_cu.vhd(285): VHDL Compiler exiting
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
 # -- Loading package numeric_std
-# -- Compiling entity mem_stage
-# -- Compiling architecture structure of mem_stage
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# ** Error: ../src/risc_v_cu.vhd(43): Nonresolved signal 'state' has multiple sources.
+#   Drivers:
+#     ../src/risc_v_cu.vhd(48):Process next_state_gen
+#        Driven at:
+#           ../src/risc_v_cu.vhd(52)
+#     ../src/risc_v_cu.vhd(68):Process state_transition
+#        Driven at:
+#           ../src/risc_v_cu.vhd(72)
+# ** Error: ../src/risc_v_cu.vhd(285): VHDL Compiler exiting
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
 # -- Loading package numeric_std
-# -- Compiling entity wb_stage
-# -- Compiling architecture structure of wb_stage
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# ** Error: ../src/risc_v_cu.vhd(43): Nonresolved signal 'state' has multiple sources.
+#   Drivers:
+#     ../src/risc_v_cu.vhd(48):Process next_state_gen
+#        Driven at:
+#           ../src/risc_v_cu.vhd(52)
+#     ../src/risc_v_cu.vhd(68):Process state_transition
+#        Driven at:
+#           ../src/risc_v_cu.vhd(72)
+# ** Error: ../src/risc_v_cu.vhd(285): VHDL Compiler exiting
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# ** Error: (vcom-7) Failed to open design unit file "../src/tb/clk_gen.vhd" in read mode.
+# No such file or directory. (errno = ENOENT)
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
 # Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
 # -- Loading package standard
 # -- Loading package std_logic_1164
 # -- Loading package std_logic_arith
-# -- Compiling entity risc_v_dp
-# -- Compiling architecture structure of risc_v_dp
+# -- Loading package std_logic_unsigned
+# -- Compiling entity clk_gen
+# -- Compiling architecture bhv of clk_gen
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package textio
+# -- Loading package std_logic_textio
+# -- Compiling entity data_maker
+# -- Compiling architecture beh of data_maker
+# ** Error: ../tb/data_maker_v2.vhd(54): (vcom-1136) Unknown identifier "fp2".
+# ** Error: ../tb/data_maker_v2.vhd(54): Bad expression in right operand of infix expression "and".
+# ** Error: ../tb/data_maker_v2.vhd(54): Type error resolving infix expression "and" as type std.standard.boolean.
+# ** Error: ../tb/data_maker_v2.vhd(86): VHDL Compiler exiting
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Compiling entity clk_gen
+# -- Compiling architecture bhv of clk_gen
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package textio
+# -- Loading package std_logic_textio
+# -- Compiling entity data_maker
+# -- Compiling architecture beh of data_maker
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Compiling entity tb_risc_v_cu
+# -- Compiling architecture bhv of tb_risc_v_cu
+# ** Error: ../tb/tb_cu.vhd(81): near "ASYNC_RST_N": expecting: ')' ','
+# ** Error: ../tb/tb_cu.vhd(114): near "wait": expecting: ';'
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Compiling entity clk_gen
+# -- Compiling architecture bhv of clk_gen
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package textio
+# -- Loading package std_logic_textio
+# -- Compiling entity data_maker
+# -- Compiling architecture beh of data_maker
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Compiling entity tb_risc_v_cu
+# -- Compiling architecture bhv of tb_risc_v_cu
+# ** Error: ../tb/tb_cu.vhd(95): Signal "mem_wr_en" is type ieee.std_logic_1164.std_logic; expecting type ieee.std_logic_1164.std_logic_vector.
+# ** Error: ../tb/tb_cu.vhd(117): VHDL Compiler exiting
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Compiling entity clk_gen
+# -- Compiling architecture bhv of clk_gen
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package textio
+# -- Loading package std_logic_textio
+# -- Compiling entity data_maker
+# -- Compiling architecture beh of data_maker
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Compiling entity tb_risc_v_cu
+# -- Compiling architecture bhv of tb_risc_v_cu
+# ** Error: ../tb/tb_cu.vhd(95): (vcom-1136) Unknown identifier "alu_op".
+# ** Error: ../tb/tb_cu.vhd(117): VHDL Compiler exiting
+# /software/mentor/modelsim_6.2g/linux/vcom failed.
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Compiling entity clk_gen
+# -- Compiling architecture bhv of clk_gen
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package textio
+# -- Loading package std_logic_textio
+# -- Compiling entity data_maker
+# -- Compiling architecture beh of data_maker
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Compiling entity tb_risc_v_cu
+# -- Compiling architecture bhv of tb_risc_v_cu
+vsim work.tb_risc_v_cu
+# vsim work.tb_risc_v_cu 
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading /software/mentor/modelsim_6.2g/linux/../std.standard
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_1164(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.numeric_std(body)
+# Loading work.tb_risc_v_cu(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_arith(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_unsigned(body)
+# Loading work.clk_gen(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../std.textio(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_textio(body)
+# Loading work.data_maker(beh)
+# Loading work.riscv_lite_instructions
+# Loading work.riscv_lite_alu_ctrl
+# Loading work.risc_v_cu(fsm)
+quit -sim
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Compiling entity clk_gen
+# -- Compiling architecture bhv of clk_gen
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package textio
+# -- Loading package std_logic_textio
+# -- Compiling entity data_maker
+# -- Compiling architecture beh of data_maker
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Compiling entity tb_risc_v_cu
+# -- Compiling architecture bhv of tb_risc_v_cu
+# vsim work.tb_risc_v_cu 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading /software/mentor/modelsim_6.2g/linux/../std.standard
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_1164(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.numeric_std(body)
+# Loading work.tb_risc_v_cu(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_arith(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_unsigned(body)
+# Loading work.clk_gen(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../std.textio(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_textio(body)
+# Loading work.data_maker(beh)
+# Loading work.riscv_lite_instructions
+# Loading work.riscv_lite_alu_ctrl
+# Loading work.risc_v_cu(fsm)
+add wave sim:/tb_risc_v_cu/clk
+add wave *
+run 10 ns
+quit -sim
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Compiling entity clk_gen
+# -- Compiling architecture bhv of clk_gen
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package textio
+# -- Loading package std_logic_textio
+# -- Compiling entity data_maker
+# -- Compiling architecture beh of data_maker
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Compiling entity tb_risc_v_cu
+# -- Compiling architecture bhv of tb_risc_v_cu
+# vsim work.tb_risc_v_cu 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading /software/mentor/modelsim_6.2g/linux/../std.standard
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_1164(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.numeric_std(body)
+# Loading work.tb_risc_v_cu(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_arith(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_unsigned(body)
+# Loading work.clk_gen(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../std.textio(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_textio(body)
+# Loading work.data_maker(beh)
+# Loading work.riscv_lite_instructions
+# Loading work.riscv_lite_alu_ctrl
+# Loading work.risc_v_cu(fsm)
+run 10 ns
+run 10 ns
+run 10 ns
+run 10 ns
+run 10 ns
+run 10 ns
+
+quit -sim
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Compiling entity clk_gen
+# -- Compiling architecture bhv of clk_gen
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package textio
+# -- Loading package std_logic_textio
+# -- Compiling entity data_maker
+# -- Compiling architecture beh of data_maker
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Compiling entity tb_risc_v_cu
+# -- Compiling architecture bhv of tb_risc_v_cu
+# vsim work.tb_risc_v_cu 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading /software/mentor/modelsim_6.2g/linux/../std.standard
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_1164(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.numeric_std(body)
+# Loading work.tb_risc_v_cu(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_arith(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_unsigned(body)
+# Loading work.clk_gen(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../std.textio(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_textio(body)
+# Loading work.data_maker(beh)
+# Loading work.riscv_lite_instructions
+# Loading work.riscv_lite_alu_ctrl
+# Loading work.risc_v_cu(fsm)
+run 10 ns
+run 10 ns
+run 10 ns
+run 10 ns
+quit -sim
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Compiling entity clk_gen
+# -- Compiling architecture bhv of clk_gen
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package textio
+# -- Loading package std_logic_textio
+# -- Compiling entity data_maker
+# -- Compiling architecture beh of data_maker
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Compiling entity tb_risc_v_cu
+# -- Compiling architecture bhv of tb_risc_v_cu
+# vsim work.tb_risc_v_cu 
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading /software/mentor/modelsim_6.2g/linux/../std.standard
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_1164(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.numeric_std(body)
+# Loading work.tb_risc_v_cu(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_arith(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_unsigned(body)
+# Loading work.clk_gen(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../std.textio(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_textio(body)
+# Loading work.data_maker(beh)
+# Loading work.riscv_lite_instructions
+# Loading work.riscv_lite_alu_ctrl
+# Loading work.risc_v_cu(fsm)
+run 10 ns
+run 10 ns
+run 10 ns
+add wave sim:/tb_risc_v_cu/clk
+add wave sim:/tb_risc_v_cu/g_rst_n
+add wave sim:/tb_risc_v_cu/async_rst_n
+add wave sim:/tb_risc_v_cu/endsim
+add wave sim:/tb_risc_v_cu/pc_en
+add wave sim:/tb_risc_v_cu/pc_sel
+add wave sim:/tb_risc_v_cu/id_wr_en
+add wave sim:/tb_risc_v_cu/rd_jal
+add wave sim:/tb_risc_v_cu/imm_op
+add wave sim:/tb_risc_v_cu/mem_wr_en
+add wave sim:/tb_risc_v_cu/zero
+add wave sim:/tb_risc_v_cu/wb_sel
+add wave sim:/tb_risc_v_cu/alu_op
+quuit -sim
+# invalid command name "quuit"
+quit -sim
+source "scripts/simulation_cu.tcl"
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_instructions
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Compiling package riscv_lite_alu_ctrl
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Loading package riscv_lite_instructions
+# -- Loading package riscv_lite_alu_ctrl
+# -- Compiling entity risc_v_cu
+# -- Compiling architecture fsm of risc_v_cu
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Compiling entity clk_gen
+# -- Compiling architecture bhv of clk_gen
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package std_logic_unsigned
+# -- Loading package textio
+# -- Loading package std_logic_textio
+# -- Compiling entity data_maker
+# -- Compiling architecture beh of data_maker
+# Model Technology ModelSim SE vcom 6.2g Compiler 2007.02 Feb 21 2007
+# -- Loading package standard
+# -- Loading package std_logic_1164
+# -- Loading package numeric_std
+# -- Compiling entity tb_risc_v_cu
+# -- Compiling architecture bhv of tb_risc_v_cu
+# vsim work.tb_risc_v_cu 
+# Loading /software/mentor/modelsim_6.2g/linux/../std.standard
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_1164(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.numeric_std(body)
+# Loading work.tb_risc_v_cu(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_arith(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_unsigned(body)
+# Loading work.clk_gen(bhv)
+# Loading /software/mentor/modelsim_6.2g/linux/../std.textio(body)
+# Loading /software/mentor/modelsim_6.2g/linux/../ieee.std_logic_textio(body)
+# Loading work.data_maker(beh)
+# Loading work.riscv_lite_instructions
+# Loading work.riscv_lite_alu_ctrl
+# Loading work.risc_v_cu(fsm)
+run 10 ns
+run 10 ns
+run 10 ns
+quit -sim
+# Break key hit 

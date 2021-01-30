@@ -26,7 +26,6 @@ entity data_maker is
 	RST_n		: in  std_logic;
     CLK  		: in  std_logic;
     DATA 		: out std_logic_vector(31 downto 0);
-	ADDRESS		: out std_logic_vector(31 downto 0);
 	END_SIM 	: out std_logic;
 	D_READY		: out std_logic);
 end data_maker;
@@ -41,8 +40,7 @@ begin  -- beh
 
     rd_file: process (CLK)
 	
-		file fp1 : text open read_mode is "C:\Users\Roberto\Google Drive\Politecnico\ISA Lab\Lab3\isa-lab-3\tb\id\reg_file.hex";
-		file fp2 : text open read_mode is "C:\Users\Roberto\Google Drive\Politecnico\ISA Lab\Lab3\isa-lab-3\tb\id\instr.hex";
+		file fp1 : text open read_mode is "/home/isa32/DELIVER/isa-lab-3/tb/machine.hex";
 		variable ptr1, ptr2 : line;
 		variable val1, val2 : std_logic_vector(31 downto 0);
 	
@@ -53,14 +51,14 @@ begin  -- beh
 			D_READY <= '0';
 
 		elsif CLK'event and CLK = '1' then  -- rising clock edge
-			if (not(endfile(fp1)) and not(endfile(fp2))) then
+			if not(endfile(fp1)) then
 				readline(fp1, ptr1);
 				hread(ptr1, val1);     
 				DATA <= val1;
 				
-				readline(fp2, ptr2);
-				hread(ptr2, val2);     
-				ADDRESS <= val2;
+				--readline(fp2, ptr2);
+				--hread(ptr2, val2);     
+				--ADDRESS <= val2;
 				
 				
 				sEndSim <= '0';

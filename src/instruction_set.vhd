@@ -50,7 +50,7 @@ constant AUIPC_OP	: std_logic_vector(OP_SIZE-1 downto 0)		:= "00101";
 
 -- LUI 
 -- U-TYPE
-constant LUI_OP		: std_logic_vector(OP_SIZE-1 downto 0)		:= "01100";
+constant LUI_OP		: std_logic_vector(OP_SIZE-1 downto 0)		:= "01101";
 
 ------------------------------------------------------------------------------
 -- BRANCH --
