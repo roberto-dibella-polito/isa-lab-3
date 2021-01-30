@@ -13,6 +13,9 @@ entity mem_stage is
 		WR_EN	: in std_logic;
 		DATA_RD	: out std_logic_vector(31 downto 0);
 		
+		IMM_IN	: in std_logic_vector(31 downto 0);
+		IMM_OUT	: out std_logic_vector(31 downto 0);
+		
 		PC_IN	: in std_logic_vector(31 downto 0);
 		PC_OUT	: out std_logic_vector(31 downto 0);
 		

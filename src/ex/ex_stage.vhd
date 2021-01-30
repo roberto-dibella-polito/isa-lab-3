@@ -15,6 +15,7 @@ entity ex_stage is
 		D2			: in std_logic_vector(31 downto 0);
 		D2_FWD		: out std_logic_vector(31 downto 0);
 		IMM			: in std_logic_vector(31 downto 0);
+		IMM_OUT		: out std_logic_vector(31 downto 0);
 		IMM_OP		: in std_logic;
 		ALU_OP		: in std_logic_vector(1 downto 0);
 		FUNC3		: in std_logic_vector(2 downto 0);
@@ -22,6 +23,7 @@ entity ex_stage is
 		PC_OUT		: out std_logic_vector(31 downto 0);
 		RD_IN		: in std_logic_vector(4 downto 0);
 		RD_OUT		: out std_logic_vector(4 downto 0);
+		LUI_OUT		: out std_logic_vector(31 downto 0);
 		ZERO		: out std_logic
 	);
 end ex_stage;
@@ -96,5 +98,6 @@ begin
 	
 	RD_OUT <= RD_IN;
 	D2_FWD <= D2;
+	IMM_OUT <= IMM;
 	
 end structure;

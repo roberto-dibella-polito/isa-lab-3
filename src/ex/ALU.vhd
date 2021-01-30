@@ -43,6 +43,17 @@ begin
 		end if;
 	end process;
 	
+	-- Zero flag
+	-- Used for BEQ -> ALU_CTRL 100
+	zero_flag: process(ALU_CTRL)
+	begin
+		if adder_out = (others=>'0') then
+			ZERO <= '1';
+		else
+			ZERO <= '0';
+		end if;
+	end process;
+	
 	-- Compare instatiation
 	compare: process(adder_out)
 	begin
@@ -63,7 +74,7 @@ begin
 	shift_out <= std_logic_vector(shift_right(d1_signed, to_integer(d2_signed)));
 	
 	-- LUI out signal -> simply a bypass
-	lui_out <= D2;
+	-- lui_out <= D2;
 	
 	-- Output mux
 	out_mux: process(ALU_CTRL, adder_out, compare_out, and_out, xor_out, shift_out, lui_out)
@@ -75,7 +86,7 @@ begin
 			when "001" => ALU_OUT <= and_out;
 			when "010" => ALU_OUT <= xor_out;
 			when "011" => ALU_OUT <= shift_out;
-			when "101" => ALU_OUT <= lui_out;
+			--when "101" => ALU_OUT <= lui_out;
 			when others => ALU_OUT <= compare_out;
 		
 		end case;

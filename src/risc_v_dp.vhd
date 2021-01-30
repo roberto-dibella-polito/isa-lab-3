@@ -25,6 +25,7 @@ entity risc_v_dp is
 		-- ID stage controls
 		ID_WR_EN	: in std_logic;
 		OPCODE		: out std_logic_vector(4 downto 0);
+		RD_JAL		: in std_logic;
 		
 		-- EX stage controls
 		IMM_OP		: in std_logic;
@@ -41,7 +42,7 @@ entity risc_v_dp is
 		MEM_EN		: out std_logic;
 		
 		-- WB stage controls
-		WB_SEL		: in std_logic_vector(1 downto 0)
+		WB_SEL		: in std_logic_vector(1 downto 0);
 		
 	);
 end risc_v_dp;
@@ -76,6 +77,7 @@ architecture structure of risc_v_dp is
 	component id_stage
 		port
 		(	PC_IN			: in std_logic_vector(31 downto 0);
+			PC_4_IN			: in std_logic_vector(31 downto 0);
 			PC_OUT			: out std_logic_vector(31 downto 0);
 			INSTR_IN		: in std_logic_vector(31 downto 0);
 			--INSTR_OUT		: out std_logic_vector(31 downto 0);
@@ -88,6 +90,9 @@ architecture structure of risc_v_dp is
 			IMMEDIATE		: out std_logic_vector(31 downto 0);
 			OPCODE			: out std_logic_vector(4 downto 0);
 			ALU_CTRL		: out std_logic_vector(2 downto 0);
+			
+			RD_JAL			: in std_logic;
+			
 			CLK				: in std_logic;
 			RST_n			: in std_logic
 		);
@@ -100,6 +105,7 @@ architecture structure of risc_v_dp is
 			D2			: in std_logic_vector(31 downto 0);
 			D2_FWD		: out std_logic_vector(31 downto 0);
 			IMM			: in std_logic_vector(31 downto 0);
+			IMM_OUT		: out std_logic_vector(31 downto 0);
 			IMM_OP		: in std_logic;
 			ALU_OP		: in std_logic_vector(1 downto 0);
 			FUNC3		: in std_logic_vector(2 downto 0);
@@ -123,11 +129,14 @@ architecture structure of risc_v_dp is
 			PC_OUT	: out std_logic_vector(31 downto 0);
 			DATA_RD	: out std_logic_vector(31 downto 0);
 			
+			IMM_IN	: in std_logic_vector(31 downto 0);
+			IMM_OUT	: out std_logic_vector(31 downto 0);
+			
 			-- Memory interface
 			MEM_IN	: out std_logic_vector(31 downto 0);
 			MEM_ADDR: out std_logic_vector(31 downto 0);
 			MEM_OUT : in std_logic_vector(31 downto 0);
-			MEM_EN	: out std_logic
+			MEM_EN	: out std_logic;
 		);
 	end component;
 	
@@ -136,27 +145,28 @@ architecture structure of risc_v_dp is
 		(	PC_IN 		: in std_logic_vector(31 downto 0);
 			DATA_RD		: in std_logic_vector(31 downto 0);
 			DATA_FWD	: in std_logic_vector(31 downto 0);
+			IMM_IN		: in std_logic_vector(31 downto 0);
 			WB_SEL		: in std_logic_vector(1 downto 0);
-			DATA_WB		: out std_logic_vector(31 downto 0)
+			DATA_WB		: out std_logic_vector(31 downto 0);
 		);
 	end component;
 	
 	
-	signal if_id_instr, if_pc_out : std_logic_vector(31 downto 0);
+	signal if_id_instr, if_pc_out, if_pc4_out_1, if_pc4_out2 : std_logic_vector(31 downto 0);
 	
-	signal id_pc_in, id_pc_out, id_data1_out, id_data2_out, id_imm_out : std_logic_vector(31 downto 0);
+	signal id_pc_in, id_pc_out, id_data1_out, id_data2_out, id_imm_out, id_pc_4_in : std_logic_vector(31 downto 0);
 	signal id_rd_out : std_logic_vector(4 downto 0);
 	signal id_alu_ctrl_out: std_logic_vector(2 downto 0);
 	
-	signal ex_pc_in, ex_pc_out, ex_data1_in, ex_data2_in, ex_imm_in, ex_alu_out, ex_fwd_out : std_logic_vector(31 downto 0);
+	signal ex_pc_in, ex_pc_out, ex_data1_in, ex_data2_in, ex_imm_in, ex_imm_out, ex_alu_out, ex_fwd_out : std_logic_vector(31 downto 0);
 	signal ex_alu_ctrl_in : std_logic_vector(2 downto 0);
 	signal ex_rd_in, ex_rd_out : std_logic_vector(4 downto 0);
 	
 	signal mem_rd_in, mem_rd_out : std_logic_vector(4 downto 0);
-	signal mem_pc_in, mem_pc_out, mem_data_out, mem_fwd_out, mem_alu_in, mem_data_in : std_logic_vector(31 downto 0);
+	signal mem_imm_in, mem_imm_out, mem_pc_in, mem_pc_out, mem_data_out, mem_fwd_out, mem_alu_in, mem_data_in : std_logic_vector(31 downto 0);
 
 	
-	signal wb_data_out, wb_pc_in, wb_data_in, wb_fwd_in : std_logic_vector(31 downto 0);
+	signal wb_imm_in, wb_data_out, wb_pc_in, wb_data_in, wb_fwd_in : std_logic_vector(31 downto 0);
 	signal wb_rd_out : std_logic_vector(4 downto 0);
 	
 begin
@@ -189,12 +199,30 @@ begin
 		if ASYNC_RST_N = '0' then
 		
 			id_pc_in 	<= (others=>'0');
+			if_pc4_out2	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
 			if rst_n = '0' then
 				id_pc_in 	<= (others=>'0');
+				if_pc4_out2	<= (others=>'0');
 			else
 				id_pc_in 	<= if_pc_out;
+				if_pc4_out2	<= if_pc4_out1;
+			end if;
+		end if;
+	end process;
+	
+	pc_4_pp2: process(CLK, ASYNC_RST_N)
+	begin
+		if ASYNC_RST_N = '0' then
+
+			id_pc4_in	<= (others=>'0');
+		
+		elsif (clk'event and clk ='1') then
+			if rst_n = '0' then
+				id_pc_4_in	<= (others=>'0');
+			else
+				id_pc_4_in	<= if_pc4_out2;
 			end if;
 		end if;
 	end process;
@@ -217,7 +245,9 @@ begin
 		OPCODE			=> OPCODE,
 		ALU_CTRL		=> id_alu_ctrl_out,
 		CLK				=> CLK,
-		RST_n			=> RST_n
+		RST_n			=> RST_n,
+		PC_4_IN			=> id_pc_4_in,
+		RD_JAL			=> RD_JAL
 	);
 	
 	-----------------------------------------------------
@@ -249,7 +279,7 @@ begin
 				ex_data2_in		<= (others=>'0');
 				ex_alu_ctrl_in 	<= (others=>'0');
 				ex_rd_in 		<= (others=>'0');
-				ex_imm_in <= (others=>'0');
+				ex_imm_in 		<= (others=>'0');
 			else
 				ex_pc_in 		<= id_pc_out;
 				ex_data1_in 	<= id_data1_out;
@@ -271,6 +301,7 @@ begin
 		D2			=> ex_data2_in,
 		D2_FWD		=> ex_fwd_out,
 		IMM			=> ex_imm_in,
+		IMM_OUT		=> ex_imm_out,
 		IMM_OP		=> IMM_OP,
 		ALU_OP		=> ALU_OP,
 		FUNC3		=> ex_alu_ctrl_in,
@@ -298,6 +329,7 @@ begin
 			mem_alu_in 	<= (others=>'0');
 			mem_data_in <= (others=>'0');
 			mem_rd_in 	<= (others=>'0');
+			mem_imm_in	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
 			if rst_n = '0' then
@@ -305,11 +337,13 @@ begin
 				mem_alu_in 	<= (others=>'0');
 				mem_data_in <= (others=>'0');
 				mem_rd_in 	<= (others=>'0');
+				mem_imm_in	<= (others=>'0');
 			else
 				mem_pc_in 	<= ex_pc_out;
 				mem_alu_in 	<= ex_alu_out;
 				mem_data_in <= ex_fwd_out;
 				mem_rd_in 	<= ex_rd_out;
+				mem_imm_in	<= ex_imm_out;
 			end if;
 		end if;
 	end process;
@@ -330,6 +364,9 @@ begin
 		
 		RD_IN	=> mem_rd_in,
 		RD_OUT	=> mem_rd_out,
+		
+		IMM_IN	=> mem_imm_in,
+		IMM_OUT	=> mem_imm_out,
 		
 		-- Memory interface
 		MEM_IN	=> MEM_IN,
@@ -354,33 +391,23 @@ begin
 			wb_data_in 	<= (others=>'0');
 			wb_fwd_in 	<= (others=>'0');
 			wb_rd_out	<= (others=>'0');
-		
+			wb_imm_in	<= (others=>'0');
 		elsif (clk'event and clk ='1') then
 			if rst_n = '0' then
 				wb_pc_in 	<= (others=>'0');
 				wb_data_in 	<= (others=>'0');
 				wb_fwd_in 	<= (others=>'0');
 				wb_rd_out	<= (others=>'0');
+				wb_imm_in	<= (others=>'0');
 			else
 				wb_pc_in 	<= mem_pc_out;
 				wb_data_in 	<= mem_data_out;
 				wb_fwd_in 	<= mem_fwd_out;
 				wb_rd_out	<= mem_rd_out;
+				wb_imm_in	<= mem_imm_out);
 			end if;
 		end if;
 	end process;
-
-	-----------------------------------------------------
-	-- WB STAGE
-	-----------------------------------------------------
-
-	write_back: wb_stage port map
-	(	PC_IN 		=> wb_pc_in,
-		DATA_RD		=> wb_data_in,
-		DATA_FWD	=> wb_fwd_in,
-		WB_SEL		=> WB_SEL,
-		DATA_WB		=> wb_data_out
-	);
 
 end structure;
 	

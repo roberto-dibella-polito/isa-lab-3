@@ -5,6 +5,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.alu_op.all;
 
 entity alu_cu is
 	port
@@ -20,23 +21,28 @@ begin
 	
 	LUT: process(ALU_OP, INSTR_OP)
 	begin
-		if ALU_OP(0) = '0' then
-			ALU_CTRL <= "000";
-		elsif ALU_OP(1) <= '0' then
-			case INSTR_OP is
-				when "000" => ALU_CTRL <= "000";
-				when "101" => ALU_CTRL <= "001";
-				when "111" => ALU_CTRL <= "011";
-				when others => ALU_CTRL <= "111";
-			end case;
-		else
-			case INSTR_OP is
-				when "000" => ALU_CTRL <= "000";
-				when "010" => ALU_CTRL <= "100";
-				when "011" => ALU_CTRL <= "010";
-				when others => ALU_CTRL <= "111";
-			end case;
-		end if;
+		case ALU_OP is
+			when "00" => ALU_CTRL <= ALU_ADD;
+			when "01" => 
+				
+				case INSTR_OP is
+					when "111" => ALU_CTRL <= ALU_AND;
+					when "101" => ALU_CTRL <= ALU_SHIFT;
+					when others => ALU_CTRL <= ALU_ADD;
+				end case;	
+				
+			when "10" =>
+			
+				case INSTR_OP is
+					when "010" => ALU_CTRL <= ALU_COMPARE;
+					when "100" => ALU_CTRL <= ALU_XOR;
+					when others => ALU_CTRL <= ALU_ADD;
+				end case;
+				
+			when others =>
+			
+				
+				
 	end process;
 
 end structure;
