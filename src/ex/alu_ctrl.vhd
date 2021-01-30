@@ -39,7 +39,7 @@ begin
 					when others => ALU_CTRL <= ALU_ADD;
 				end case;
 				
-			when "11" => ALU_CTRL <= ALU_SHIFT;
+			when "11" => ALU_CTRL <= ALU_ROTATER;
 			
 			when others => ALU_CTRL <= ALU_ADD;
 		end case;

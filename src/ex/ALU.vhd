@@ -26,8 +26,12 @@ architecture bhv of ALU is
 	signal xor_out		: std_logic_vector(31 downto 0);
 	signal shift_out	: std_logic_vector(31 downto 0);
 	signal lui_out		: std_logic_vector(31 downto 0);
+	signal rotr_out		: std_logic_vector(31 downto 0);
+	
+	signal rotr_upper, rotr_lower	: std_logic_vector(31 downto 0); -- Used to temporary store the data to rotate
 	
 	signal d1_signed, d2_signed : signed(31 downto 0);
+	
 	
 begin
 
@@ -74,8 +78,8 @@ begin
 	-- Shift right
 	shift_out <= std_logic_vector(shift_right(d1_signed, to_integer(d2_signed)));
 	
-	-- LUI out signal -> simply a bypass
-	-- lui_out <= D2;
+	-- Rotate right
+	rotr_out <= std_logic_vector(rotate_right(d1_signed, to_integer(d2_signed)));
 	
 	-- Output mux
 	out_mux: process(ALU_CTRL, adder_out, compare_out, and_out, xor_out, shift_out)
@@ -87,6 +91,7 @@ begin
 			when ALU_AND 	=> ALU_OUT <= and_out;
 			when ALU_XOR 	=> ALU_OUT <= xor_out;
 			when ALU_SHIFT 	=> ALU_OUT <= shift_out;
+			when ALU_ROTATER => ALU_OUT <= rotr_out;
 			when others 	=> ALU_OUT <= compare_out;
 		
 		end case;
