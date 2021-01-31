@@ -26,10 +26,11 @@ entity risc_v_cu is
 		-- EX stage controls
 		IMM_OP		: out std_logic;
 		ALU_OP		: out std_logic_vector(1 downto 0);
-		ZERO		: in std_logic;
+		--ZERO		: in std_logic;
 		
 		-- MEM stage controls
 		MEM_WR_EN	: out std_logic;
+		BRANCH		: out std_logic;
 		
 		-- WB stage controls
 		WB_SEL		: out std_logic_vector(1 downto 0)
@@ -99,6 +100,7 @@ begin
 				ALU_OP		<= ALU_OP_ADD;
 				--------------------------- MEM
 				MEM_WR_EN	<= '0';
+				BRANCH		<= '0';
 				--------------------------- WB
 				WB_SEL		<= "00";
 				
@@ -116,6 +118,7 @@ begin
 				ALU_OP		<= ALU_OP_ROTR;
 				--------------------------- MEM
 				MEM_WR_EN	<= '0';
+				BRANCH		<= '0';
 				--------------------------- WB
 				WB_SEL		<= "01";
 				
@@ -133,6 +136,7 @@ begin
 				ALU_OP		<= ALU_OP_IMM;
 				--------------------------- MEM
 				MEM_WR_EN	<= '0';
+				BRANCH		<= '0';
 				--------------------------- WB
 				WB_SEL		<= "01";
 				
@@ -150,6 +154,7 @@ begin
 				ALU_OP		<= ALU_OP_ADD;
 				--------------------------- MEM
 				MEM_WR_EN	<= '0';
+				BRANCH		<= '0';
 				--------------------------- WB
 				WB_SEL		<= "10";
 				
@@ -184,6 +189,7 @@ begin
 				ALU_OP		<= ALU_OP_OP;
 				--------------------------- MEM
 				MEM_WR_EN	<= '0';
+				BRANCH		<= '0';
 				--------------------------- WB
 				WB_SEL		<= "01";
 				
@@ -201,47 +207,29 @@ begin
 				ALU_OP		<= ALU_OP_ADD;
 				--------------------------- MEM
 				MEM_WR_EN	<= '0';
+				BRANCH		<= '0';
 				--------------------------- WB
 				WB_SEL		<= "11";
 				
 			when BEQ =>
 			
-				if ZERO = '1' then --branch taken
-					RST_n		<= '1';
-					--------------------------- IF 
-					PC_EN		<= '1';
-					PC_SEL		<= '1';				
-					--------------------------- ID
-					ID_WR_EN	<= '0';
-					RD_JAL		<= '0';
-					--------------------------- EX
-					IMM_OP		<= '1';
-					ALU_OP		<= ALU_OP_ADD;
-					--------------------------- MEM
-					MEM_WR_EN	<= '0';
-					--------------------------- WB
-					WB_SEL		<= "11";
+				RST_n		<= '1';
+				--------------------------- IF 
+				PC_EN		<= '1';
+				PC_SEL		<= '1';				
+				--------------------------- ID
+				ID_WR_EN	<= '0';
+				RD_JAL		<= '0';
+				--------------------------- EX
+				IMM_OP		<= '1';
+				ALU_OP		<= ALU_OP_ADD;
+				--------------------------- MEM
+				MEM_WR_EN	<= '0';
+				BRANCH		<= '1';
+				--------------------------- WB
+				WB_SEL		<= "11";
 				
-					-- ATTENTION: I should FLUSH the pipeline!
-					
-					
-				else
-					RST_n		<= '1';
-					--------------------------- IF 
-					PC_EN		<= '1';
-					PC_SEL		<= '0';				
-					--------------------------- ID
-					ID_WR_EN	<= '0';
-					RD_JAL		<= '0';
-					--------------------------- EX
-					IMM_OP		<= '1';
-					ALU_OP		<= ALU_OP_ADD;
-					--------------------------- MEM
-					MEM_WR_EN	<= '0';
-					--------------------------- WB
-					WB_SEL		<= "11";
-				
-				end if;
+				-- ATTENTION: I should FLUSH the pipeline!
 			
 			when JAL =>
 			
@@ -257,6 +245,7 @@ begin
 				ALU_OP		<= ALU_OP_ADD;
 				--------------------------- MEM
 				MEM_WR_EN	<= '0';
+				BRANCH		<= '0';
 				--------------------------- WB
 				WB_SEL		<= "11";
 				
@@ -276,6 +265,7 @@ begin
 				ALU_OP		<= ALU_OP_ADD;
 				--------------------------- MEM
 				MEM_WR_EN	<= '0';
+				BRANCH		<= '0';
 				--------------------------- WB
 				WB_SEL		<= "00";
 				

@@ -16,7 +16,7 @@ entity risc_v_dp is
 		
 		-- IF stage controls
 		PC_EN		: in std_logic;
-		PC_SEL		: in std_logic;
+		PC_JAL		: in std_logic;
 		
 		-- Instruction Memory
 		IM_IN		: out std_logic_vector (31 downto 0);
@@ -34,6 +34,7 @@ entity risc_v_dp is
 		
 		-- MEM stage controls
 		MEM_WR_EN	: in std_logic;
+		BRANCH		: in std_logic;
 		
 		-- Memory interface
 		MEM_IN		: out std_logic_vector(31 downto 0);
@@ -124,14 +125,20 @@ architecture structure of risc_v_dp is
 			FORWARD	: out std_logic_vector(31 downto 0);
 			DATA_WR	: in std_logic_vector(31 downto 0);
 			WR_EN	: in std_logic;
-			RD_IN	: in std_logic_vector(4 downto 0);
-			RD_OUT	: out std_logic_vector(4 downto 0);
-			PC_IN	: in std_logic_vector(31 downto 0);
-			PC_OUT	: out std_logic_vector(31 downto 0);
 			DATA_RD	: out std_logic_vector(31 downto 0);
+			
+			BRANCH	: in std_logic;
+			ZERO	: in std_logic;
+			BRANCH_T: out std_logic;
 			
 			IMM_IN	: in std_logic_vector(31 downto 0);
 			IMM_OUT	: out std_logic_vector(31 downto 0);
+			
+			PC_IN	: in std_logic_vector(31 downto 0);
+			PC_OUT	: out std_logic_vector(31 downto 0);
+			
+			RD_IN	: in std_logic_vector(4 downto 0);
+			RD_OUT	: out std_logic_vector(4 downto 0);
 			
 			-- Memory interface
 			MEM_IN	: out std_logic_vector(31 downto 0);
@@ -154,6 +161,7 @@ architecture structure of risc_v_dp is
 	
 	
 	signal if_id_instr, if_pc_out, if_pc4_out_1, if_pc4_out2 : std_logic_vector(31 downto 0);
+	signal if_pc_jump : std_logic;
 	
 	signal id_pc_in, id_pc_out, id_data1_out, id_data2_out, id_imm_out, id_pc_4_in : std_logic_vector(31 downto 0);
 	signal id_rd_out : std_logic_vector(4 downto 0);
@@ -162,9 +170,11 @@ architecture structure of risc_v_dp is
 	signal ex_pc_in, ex_pc_out, ex_data1_in, ex_data2_in, ex_imm_in, ex_imm_out, ex_alu_out, ex_fwd_out : std_logic_vector(31 downto 0);
 	signal ex_alu_ctrl_in : std_logic_vector(2 downto 0);
 	signal ex_rd_in, ex_rd_out : std_logic_vector(4 downto 0);
+	signal ex_zero_out : out std_logic;
 	
 	signal mem_rd_in, mem_rd_out : std_logic_vector(4 downto 0);
 	signal mem_imm_in, mem_imm_out, mem_pc_in, mem_pc_out, mem_data_out, mem_fwd_out, mem_alu_in, mem_data_in : std_logic_vector(31 downto 0);
+	signal mem_if_branch_t, mem_zero_in : std_logic;
 
 	
 	signal wb_imm_in, wb_data_out, wb_pc_in, wb_data_in, wb_fwd_in : std_logic_vector(31 downto 0);
@@ -175,6 +185,8 @@ begin
 	----------------------------------------------------
 	-- INSTRUCTION FETCH STAGE
 	----------------------------------------------------
+	
+	if_pc_jump <= PC_JAL or mem_if_branch_t;
 
 	instr_fetch: if_stage port map 
 	(	CLK		=> CLK,
@@ -185,8 +197,8 @@ begin
 		IM_OUT	=> IM_OUT,
 		INSTR	=> if_id_instr,
 		PC		=> if_pc_out,
-		PC_4		=> if_pc4_out_1,
-		PC_SEL	=> PC_SEL
+		PC_4	=> if_pc4_out_1,
+		PC_SEL	=> if_pc_jump
 	);
 	
 	-----------------------------------------------------
@@ -232,6 +244,7 @@ begin
 	-----------------------------------------------------
 	-- INSTRUCTION DECODE STAGE
 	-----------------------------------------------------
+	
 	
 	instr_decode: id_stage port map
 	(	PC_IN			=> id_pc_in,
@@ -320,6 +333,7 @@ begin
 	--							ALU_OUT 
 	-- 							D2_FWD
 	--							RD_OUT
+	--							ZERO
 	-----------------------------------------------------
 	
 	ex_mem_pp: process(CLK, ASYNC_RST_N)
@@ -332,6 +346,7 @@ begin
 			mem_data_in <= (others=>'0');
 			mem_rd_in 	<= (others=>'0');
 			mem_imm_in	<= (others=>'0');
+			mem_zero_in <= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
 			if rst_n = '0' then
@@ -340,12 +355,14 @@ begin
 				mem_data_in <= (others=>'0');
 				mem_rd_in 	<= (others=>'0');
 				mem_imm_in	<= (others=>'0');
+				mem_zero_in <= (others=>'0');
 			else
 				mem_pc_in 	<= ex_pc_out;
 				mem_alu_in 	<= ex_alu_out;
 				mem_data_in <= ex_fwd_out;
 				mem_rd_in 	<= ex_rd_out;
 				mem_imm_in	<= ex_imm_out;
+				mem_zero_in <= ex_zero_out;
 			end if;
 		end if;
 	end process;
@@ -360,6 +377,10 @@ begin
 		DATA_WR	=> mem_data_in,
 		WR_EN	=> MEM_WR_EN,
 		DATA_RD	=> mem_data_out,
+		
+		BRANCH	=> branch,
+		ZERO	=> zero,
+		BRANCH_T=> mem_if_branch_t,
 		
 		PC_IN	=> mem_pc_in,
 		PC_OUT	=> mem_pc_out,

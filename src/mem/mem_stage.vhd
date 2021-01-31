@@ -13,6 +13,10 @@ entity mem_stage is
 		WR_EN	: in std_logic;
 		DATA_RD	: out std_logic_vector(31 downto 0);
 		
+		BRANCH	: in std_logic;
+		ZERO	: in std_logic;
+		BRANCH_T: out std_logic;
+		
 		IMM_IN	: in std_logic_vector(31 downto 0);
 		IMM_OUT	: out std_logic_vector(31 downto 0);
 		
@@ -47,6 +51,8 @@ begin
 	PC_OUT <= PC_IN;
 	
 	IMM_OUT <= IMM_IN;
+	
+	BRANCH_T <= ZERO and BRANCH;
 	
 end structure;
 	
