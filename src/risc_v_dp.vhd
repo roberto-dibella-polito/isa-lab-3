@@ -30,7 +30,6 @@ entity risc_v_dp is
 		-- EX stage controls
 		IMM_OP		: in std_logic;
 		ALU_OP		: in std_logic_vector(1 downto 0);
-		ZERO		: out std_logic;
 		
 		-- MEM stage controls
 		MEM_WR_EN	: in std_logic;
@@ -170,7 +169,7 @@ architecture structure of risc_v_dp is
 	signal ex_pc_in, ex_pc_out, ex_data1_in, ex_data2_in, ex_imm_in, ex_imm_out, ex_alu_out, ex_fwd_out : std_logic_vector(31 downto 0);
 	signal ex_alu_ctrl_in : std_logic_vector(2 downto 0);
 	signal ex_rd_in, ex_rd_out : std_logic_vector(4 downto 0);
-	signal ex_zero_out : out std_logic;
+	signal ex_zero_out : std_logic;
 	
 	signal mem_rd_in, mem_rd_out : std_logic_vector(4 downto 0);
 	signal mem_imm_in, mem_imm_out, mem_pc_in, mem_pc_out, mem_data_out, mem_fwd_out, mem_alu_in, mem_data_in : std_logic_vector(31 downto 0);
@@ -324,7 +323,7 @@ begin
 		PC_OUT		=> ex_pc_out,
 		RD_IN		=> ex_rd_in,
 		RD_OUT		=> ex_rd_out,
-		ZERO		=> ZERO
+		ZERO		=> ex_zero_out
 	); 
 	
 	-----------------------------------------------------
@@ -346,7 +345,7 @@ begin
 			mem_data_in <= (others=>'0');
 			mem_rd_in 	<= (others=>'0');
 			mem_imm_in	<= (others=>'0');
-			mem_zero_in <= (others=>'0');
+			mem_zero_in <= '0';
 		
 		elsif (clk'event and clk ='1') then
 			if rst_n = '0' then
@@ -355,7 +354,7 @@ begin
 				mem_data_in <= (others=>'0');
 				mem_rd_in 	<= (others=>'0');
 				mem_imm_in	<= (others=>'0');
-				mem_zero_in <= (others=>'0');
+				mem_zero_in <= '0';
 			else
 				mem_pc_in 	<= ex_pc_out;
 				mem_alu_in 	<= ex_alu_out;
@@ -379,7 +378,7 @@ begin
 		DATA_RD	=> mem_data_out,
 		
 		BRANCH	=> branch,
-		ZERO	=> zero,
+		ZERO	=> mem_zero_in,
 		BRANCH_T=> mem_if_branch_t,
 		
 		PC_IN	=> mem_pc_in,

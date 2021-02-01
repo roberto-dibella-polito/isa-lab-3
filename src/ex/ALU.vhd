@@ -82,7 +82,7 @@ begin
 	rotr_out <= std_logic_vector(rotate_right(d1_signed, to_integer(d2_signed)));
 	
 	-- Output mux
-	out_mux: process(ALU_CTRL, adder_out, compare_out, and_out, xor_out, shift_out)
+	out_mux: process(ALU_CTRL, adder_out, compare_out, and_out, xor_out, shift_out, rotr_out)
 	begin
 		
 		case ALU_CTRL is
