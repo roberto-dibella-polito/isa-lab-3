@@ -7,22 +7,23 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity regfile is
+entity mem is
 	port
 	(	ADDR		: in std_logic_vector(31 downto 0);
 		DATA_OUT	: out std_logic_vector(31 downto 0);
+		DATA_IN		: in std_logic_vector(31 downto 0);
 		WR_EN		: in std_logic;
 		RST_n		: in std_logic;
 		CLK			: in std_logic
 	);
-end regfile;
+end mem;
 
-architecture bhv of regfile is
+architecture bhv of mem is
 
 	-- Memory type definition
 	type mem_type is array (0 to (2**16)-1) of std_logic_vector(7 downto 0);
 	
-	signal mem_block_1, mem_block_2 : mem_array;
+	signal M1, M2 : mem_type;
 	
 	type byte_array is array (0 to 3) of std_logic_vector(7 downto 0);
 	signal b : byte_array;
@@ -37,20 +38,20 @@ begin
 		if(CLK'event and CLK = '1') then	
 			
 			if(RST_n = '0') then
-				mem_block_1 <= (OTHERS => (OTHERS => '0'));
-				mem_block_2 <= (OTHERS => (OTHERS => '0'));
+				M1 <= (OTHERS => (OTHERS => '0'));
+				M2 <= (OTHERS => (OTHERS => '0'));
 			elsif( WR_EN = '1') then
 				if unsigned(ADDR) < (2**16)-1 then
-					b(0) <= to_stdlogicvector(mem_block_1(to_integer(unsigned(ADDR(15 downto 0)))));
-					b(1) <= to_stdlogicvector(mem_block_1(to_integer(unsigned(ADDR(15 downto 0))+1)));
-					b(2) <= to_stdlogicvector(mem_block_1(to_integer(unsigned(ADDR(15 downto 0))+2)));
-					b(3) <= to_stdlogicvector(mem_block_1(to_integer(unsigned(ADDR(15 downto 0))+3)));
+					M1(to_integer(unsigned(ADDR(15 downto 0))))	<= DATA_IN(7 downto 0);
+					M1(to_integer(unsigned(ADDR(15 downto 0))+1))	<= DATA_IN(15 downto 8);
+					M1(to_integer(unsigned(ADDR(15 downto 0))+2))	<= DATA_IN(23 downto 16);
+					M1(to_integer(unsigned(ADDR(15 downto 0))+3))	<= DATA_IN(31 downto 24);
 				else
 					addr2 <= unsigned(ADDR) - (2**16);
-					b(0) <= to_stdlogicvector(mem_block_2(to_integer(addr2(15 downto 0))));
-					b(1) <= to_stdlogicvector(mem_block_2(to_integer(addr2(15 downto 0))+1));
-					b(2) <= to_stdlogicvector(mem_block_2(to_integer(addr2(15 downto 0))+2));
-					b(3) <= to_stdlogicvector(mem_block_2(to_integer(addr2(15 downto 0))+3));
+					M2(to_integer(unsigned(addr2(15 downto 0))))	<= DATA_IN(7 downto 0);
+					M2(to_integer(unsigned(addr2(15 downto 0))+1))	<= DATA_IN(15 downto 8);
+					M2(to_integer(unsigned(addr2(15 downto 0))+2))	<= DATA_IN(23 downto 16);
+					M2(to_integer(unsigned(addr2(15 downto 0))+3))	<= DATA_IN(31 downto 24);
 				end if;
 			end if;
 		
@@ -62,16 +63,16 @@ begin
 	memory_read: process(ADDR)
 	begin
 		if unsigned(ADDR) < (2**16)-1 then
-			b(0) <= to_stdlogicvector(M1(to_integer(unsigned(ADDR(15 downto 0)))));
-			b(1) <= to_stdlogicvector(M1(to_integer(unsigned(ADDR(15 downto 0))+1)));
-			b(2) <= to_stdlogicvector(M1(to_integer(unsigned(ADDR(15 downto 0))+2)));
-			b(3) <= to_stdlogicvector(M1(to_integer(unsigned(ADDR(15 downto 0))+3)));
+			b(0) <= M1(to_integer(unsigned(ADDR(15 downto 0))));
+			b(1) <= M1(to_integer(unsigned(ADDR(15 downto 0))+1));
+			b(2) <= M1(to_integer(unsigned(ADDR(15 downto 0))+2));
+			b(3) <= M1(to_integer(unsigned(ADDR(15 downto 0))+3));
 		else
 			addr2 <= unsigned(ADDR) - (2**16);
-			b(0) <= to_stdlogicvector(M2(to_integer(addr2(15 downto 0))));
-			b(1) <= to_stdlogicvector(M2(to_integer(addr2(15 downto 0))+1));
-			b(2) <= to_stdlogicvector(M2(to_integer(addr2(15 downto 0))+2));
-			b(3) <= to_stdlogicvector(M2(to_integer(addr2(15 downto 0))+3));
+			b(0) <= M2(to_integer(addr2(15 downto 0)));
+			b(1) <= M2(to_integer(addr2(15 downto 0))+1);
+			b(2) <= M2(to_integer(addr2(15 downto 0))+2);
+			b(3) <= M2(to_integer(addr2(15 downto 0))+3);
 		end if;
 	 end process;
 	 

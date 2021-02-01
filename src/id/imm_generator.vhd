@@ -28,7 +28,7 @@ begin
 		
 		variable immediate : signed(11 downto 0);
 		variable long_immediate	: signed(19 downto 0);
-		variable left_shift : signed(11 downto 0) := (others => '0');
+		variable left_shift : signed(10 downto 0) := (others => '0');
 	
 	begin
 		
@@ -45,10 +45,15 @@ begin
 			IMM <= std_logic_vector(resize(immediate,32));
 			
 		-- U-type
-		elsif( (opcode = LUI_OP) or (opcode = AUIPC_OP) ) then
+		elsif (opcode = LUI_OP) then
+			
+			long_immediate := signed(INSTR(31 downto 12));
+			IMM <= std_logic_vector(long_immediate & left_shift & '0');
+		
+		elsif( (opcode = AUIPC_OP) ) then
 		
 			long_immediate := signed(INSTR(31 downto 12));
-			IMM <= std_logic_vector(long_immediate & left_shift);
+			IMM <= std_logic_vector('0' & long_immediate & left_shift);
 			
 		-- J-type
 		elsif( opcode = JAL_OP ) then

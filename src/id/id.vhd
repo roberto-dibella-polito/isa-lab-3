@@ -73,8 +73,8 @@ begin
 	-- Register File
 	
 	memory: regfile port map
-	(	RS1			=> INSTR_IN(19 downto 15),
-		RS2			=> INSTR_IN(24 downto 20),
+	(	RS1			=> instruction(19 downto 15),
+		RS2			=> instruction(24 downto 20),
 		RD			=> RD_IN,
 		DATA_IN		=> regfile_data_in,
 		WR_EN		=> WR_EN,

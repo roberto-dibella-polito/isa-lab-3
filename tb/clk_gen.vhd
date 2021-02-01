@@ -36,6 +36,7 @@ begin  -- beh
     wait for Ts/2;
   end process clock;
 
-  CLK <= CLK_i and not(END_SIM);
+  CLK <= CLK_i; 
+--and not(END_SIM);
 
 end bhv;
