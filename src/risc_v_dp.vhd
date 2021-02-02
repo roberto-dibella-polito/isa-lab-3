@@ -159,7 +159,7 @@ architecture structure of risc_v_dp is
 	end component;
 	
 	
-	signal if_id_instr, if_pc_out, if_pc4_out_1, if_pc4_out2 : std_logic_vector(31 downto 0);
+	signal if_id_instr, if_pc_out, if_pc4_out_1, if_pc4_out2, if_pc_out3, if_pc_out4 : std_logic_vector(31 downto 0);
 	signal if_pc_jump : std_logic;
 	
 	signal id_pc_in, id_pc_out, id_data1_out, id_data2_out, id_imm_out, id_pc_4_in : std_logic_vector(31 downto 0);
@@ -179,7 +179,16 @@ architecture structure of risc_v_dp is
 	signal wb_imm_in, wb_data_out, wb_pc_in, wb_data_in, wb_fwd_in : std_logic_vector(31 downto 0);
 	signal wb_rd_out : std_logic_vector(4 downto 0);
 	
+	signal rst_jump_n : std_logic;
+	
 begin
+	
+	-- BRANCH/JAL RESET, to flush the pipelined
+	-- Registers to be cleared: if/id, id/ex, ex/mem
+	pipe_rst_n <= (not mem_if_branch_t) and (not PC_JAL) and RST_n;
+	
+	
+	
 	
 	----------------------------------------------------
 	-- INSTRUCTION FETCH STAGE
@@ -191,7 +200,7 @@ begin
 	(	CLK		=> CLK,
 		RST_n	=> RST_n,
 		PC_EN	=> PC_EN,
-		PC_JP	=> ex_pc_out,
+		PC_JP	=> mem_pc_in,
 		IM_IN	=> IM_IN,
 		IM_OUT	=> IM_OUT,
 		INSTR	=> if_id_instr,
@@ -215,7 +224,7 @@ begin
 			if_pc4_out2	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
-			if rst_n = '0' then
+			if pipe_rst_n = '0' then
 				id_pc_in 	<= (others=>'0');
 				if_pc4_out2	<= (others=>'0');
 			else
@@ -229,13 +238,43 @@ begin
 	begin
 		if ASYNC_RST_N = '0' then
 
+			id_pc_4_out3	<= (others=>'0');
+		
+		elsif (clk'event and clk ='1') then
+			if pipe_rst_n = '0' then
+				id_pc_4_out3	<= (others=>'0');
+			else
+				id_pc_4_out3	<= if_pc4_out2;
+			end if;
+		end if;
+	end process;
+	
+	pc_4_pp3: process(CLK, ASYNC_RST_N)
+	begin
+		if ASYNC_RST_N = '0' then
+
+			id_pc_4_out4	<= (others=>'0');
+		
+		elsif (clk'event and clk ='1') then
+			if pipe_rst_n = '0' then
+				id_pc_4_out4	<= (others=>'0');
+			else
+				id_pc_4_out4	<= if_pc4_out3;
+			end if;
+		end if;
+	end process;
+	
+	pc_4_pp4: process(CLK, ASYNC_RST_N)
+	begin
+		if ASYNC_RST_N = '0' then
+
 			id_pc_4_in	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
-			if rst_n = '0' then
+			if pipe_rst_n = '0' then
 				id_pc_4_in	<= (others=>'0');
 			else
-				id_pc_4_in	<= if_pc4_out2;
+				id_pc_4_in	<= if_pc4_out4;
 			end if;
 		end if;
 	end process;
@@ -287,7 +326,7 @@ begin
 			ex_imm_in <= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
-			if rst_n = '0' then
+			if pipe_rst_n = '0' then
 				ex_pc_in 		<= (others=>'0');
 				ex_data1_in 	<= (others=>'0');
 				ex_data2_in		<= (others=>'0');
@@ -348,7 +387,7 @@ begin
 			mem_zero_in <= '0';
 		
 		elsif (clk'event and clk ='1') then
-			if rst_n = '0' then
+			if pipe_rst_n = '0' then
 				mem_pc_in 	<= (others=>'0');
 				mem_alu_in 	<= (others=>'0');
 				mem_data_in <= (others=>'0');
