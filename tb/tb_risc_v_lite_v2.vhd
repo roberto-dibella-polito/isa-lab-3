@@ -50,6 +50,7 @@ architecture bhv of tb_risc_v_lite is
 			DATA_IN		: in std_logic_vector(31 downto 0);
 			WR_EN		: in std_logic;
 			RST_n		: in std_logic;
+			ASYNC_RST_N : in std_logic;
 			CLK			: in std_logic
 		);
 	end component;
@@ -94,7 +95,8 @@ begin
 			DATA_OUT	=> i_mem_out,
 			DATA_IN		=> i_mem_in,
 			WR_EN		=> i_mem_en,
-			RST_n		=> async_rst_n,
+			RST_n		=> rst_n,
+			ASYNC_RST_N	=> async_rst_n,
 			CLK			=> clk
 		);
 

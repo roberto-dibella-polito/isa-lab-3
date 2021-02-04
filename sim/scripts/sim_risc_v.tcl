@@ -26,7 +26,7 @@ vcom -93 -work ./work ../src/risc_v.vhd
 vcom -93 -work ./work ../tb/clk_gen.vhd
 vcom -93 -work ./work ../tb/EOF_detector.vhd
 vcom -93 -work ./work ../tb/if/instruction_memory_v2.vhd
-vcom -93 -work ./work ../tb/mem/mem.vhd
+vcom -93 -work ./work ../tb/mem/mem_v2.vhd
 
 # top level entity
 vcom -93 -work ./work ../tb/tb_risc_v_lite_v2.vhd
@@ -65,6 +65,8 @@ add wave sim:/tb_risc_v_lite/dut/datapath/execute/alu_op
 
 add wave -divider "MEM"
 add wave -radix hexadecimal sim:/tb_risc_v_lite/data_mem/addr
+add wave -radix decimal sim:/tb_risc_v_lite/data_mem/addr_1
+add wave -radix decimal sim:/tb_risc_v_lite/data_mem/addr_2
 add wave -radix hexadecimal sim:/tb_risc_v_lite/data_mem/data_out
 add wave -radix hexadecimal sim:/tb_risc_v_lite/data_mem/data_in
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/memory/imm_out

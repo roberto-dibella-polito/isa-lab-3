@@ -4,29 +4,26 @@ L 3 std 18 $MODEL_TECH/../std
 L 4 work 6 ./work
 D 15 ./work.alu(bhv) F_YBN?PiEg]9[f:[amAH73 7 1
 D 24 ./work.alu_cu(structure) 0HU@VM0e=k;I]IJ`P;WaG1 8 1
-D 19 ./work.clk_gen(bhv) _ZZ295XhLQ87L:Qg@D=8n2 15 1
-D 24 ./work.eof_detector(beh) PdGL?lbLPSBERVBbh?]cl1 16 1
+D 19 ./work.clk_gen(bhv) _ZZ295XhLQ87L:Qg@D=8n2 17 1
+D 24 ./work.eof_detector(beh) PdGL?lbLPSBERVBbh?]cl1 18 1
 D 26 ./work.ex_stage(structure) ]Dcn^XjgR4k75O[H_Y:lJ2 9 1
 D 20 ./work.id_stage(bhv) [acN`RCO>Di@7_3lDBlJ50 5 1
 D 20 ./work.if_stage(bhv) :=?>UR_idR7kYzmWXfaMo3 2 1
 D 19 ./work.imm_gen(bhv) bl`d9h50N0X`FHNh<589V2 4 1
-D 30 ./work.instruction_memory(bhv) cc1Rmhae;^MK=aZ9135ZJ3 13 1
-D 15 ./work.mem(bhv) eJ4=8mC8Fkb?9Dz5A7UNY2 14 1
+D 30 ./work.instruction_memory(bhv) cc1Rmhae;^MK=aZ9135ZJ3 16 1
+D 15 ./work.mem(bhv) ^g6V84[kOa?Aa;IjU3D6:2 19 1
 D 27 ./work.mem_stage(structure) noCTSbL4G`6RMoTlRakhF3 10 1
 D 18 ./work.pc_alu(bhv) mGZmQjNYh;6=^EMQz;`6M0 6 1
 D 19 ./work.regfile(bhv) 7a<=f9EecP_K7<mazU;mc1 3 1
-D 21 ./work.risc_v_cu(fsm) z>PiVanzfMPcLSBl3hO860 17 1
-D 30 ./work.risc_v_cu_pp(structure) YZk2]jNY8Tac^T9_C7JDn1 18 1
+D 21 ./work.risc_v_cu(fsm) z>PiVanzfMPcLSBl3hO860 13 1
+D 30 ./work.risc_v_cu_pp(structure) YZk2]jNY8Tac^T9_C7JDn1 14 1
 D 27 ./work.risc_v_dp(structure) U2@zd`PV^0NQBo1dQ6U_@3 12 1
-D 29 ./work.risc_v_lite(structure) BSzo9h^K@`:4]]N;QV<fn2 19 1
+D 29 ./work.risc_v_lite(structure) BSzo9h^K@`:4]]N;QV<fn2 15 1
 D 26 ./work.riscv_lite_alu_ctrl >jFOUHOmKlE0=cN50XziC3 0 1
 D 30 ./work.riscv_lite_instructions B<1lzL6;YUKD3=UKR8;1b3 1 1
-D 26 ./work.tb_risc_v_lite(bhv) JlBVS20ANjK8<VZ>JRR=g0 20 1
+D 26 ./work.tb_risc_v_lite(bhv) IE^a4_g2Qb2?[IHYEo8`=0 20 1
 D 26 ./work.wb_stage(structure) n=7_:HWinIf_8InQzXYN<2 11 1
-2 0  0 U<;B^lHcYmKe67fDETzX?0 20 20 1
-2 0  0 YBBIn?H?WLaUSne3[I;f50 19 19 1
-2 0  0 WLdnz@`TfCU1FImIj;]7G0 17 17 1
-2 0  0 QoFm;Ij375]IX3ZOcUNWi0 18 18 1
+2 0  0 fDD82SX6QO15ahOezAS[?0 20 20 1
 2 0  0 <jE[7Z0nR<Zd>5aHCQ02C1 2 2 1
 2 0  0 ?E5XNDLa8SR6FJ6V<[QaG3 3 3 1
 2 0  0 ?Nl@I?9<k_anEZKXAcM4^3 4 4 1
@@ -38,9 +35,12 @@ D 26 ./work.wb_stage(structure) n=7_:HWinIf_8InQzXYN<2 11 1
 2 0  0 Tj1Q<1WD[i?`5]oR69NHz0 10 10 1
 2 0  0 DW5=nHO54hI0:@eB2H<H_2 11 11 1
 2 0  0 mnl>A1bWB5@Z4kF4IjR<c3 12 12 1
-2 0  0 M5SL`_?M6WL>@kfadeRMm3 13 13 1
-2 0  0 b3Pf<aOB7[>gal9nS?UfV3 14 14 1
-2 0  0 iWGHNDjGTc_bfm@ZaQ9ll0 15 15 1
-2 0  0 RVKa=3VP:>7WKG6;XmFQI1 16 16 1
+2 0  0 WLdnz@`TfCU1FImIj;]7G0 13 13 1
+2 0  0 QoFm;Ij375]IX3ZOcUNWi0 14 14 1
+2 0  0 YBBIn?H?WLaUSne3[I;f50 15 15 1
+2 0  0 M5SL`_?M6WL>@kfadeRMm3 16 16 1
+2 0  0 iWGHNDjGTc_bfm@ZaQ9ll0 17 17 1
+2 0  0 RVKa=3VP:>7WKG6;XmFQI1 18 18 1
+2 0  0 fBPR]blBFW?[CG=@XJ2<I0 19 19 1
 2 0  0 aJA_cb:JhlV@A@C6aX1X^3 0 0 1
 2 0  0 5i5=eEA7nZecizHSk>36T3 1 1 1

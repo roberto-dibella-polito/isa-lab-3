@@ -3,7 +3,7 @@ m255
 cModel Technology
 d/home/isa32/DELIVER/isa-lab-3/sim
 T_opt
-V<lSD]cGEl5WUW:Z4@eCfC2
+VaXXHd]]jeY`c>a6[NDb]J2
 06 14 3 ./work tb_risc_v_lite bhv 0
 o-quiet -auto_acc_if_foreign -work work
 tExplicit 1
@@ -270,14 +270,14 @@ M1 std textio
 o-93 -work ./work
 tExplicit 1
 Emem
-w1612183107
+w1612443490
 DP ieee numeric_std =NSdli^?T5OD8;4F<blj<3
 DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
-8../tb/mem/mem.vhd
-F../tb/mem/mem.vhd
+8../tb/mem/mem_v2.vhd
+F../tb/mem/mem_v2.vhd
 l0
 L10
-VXjNiaW1dh9KdGTJaAjK?^3
+VaQHj2_Q6?J@`HeSUAAkzj2
 OE;C;6.2g;35
 31
 o-93 -work ./work
@@ -285,10 +285,10 @@ tExplicit 1
 Abhv
 DP ieee numeric_std =NSdli^?T5OD8;4F<blj<3
 DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
-DE work mem XjNiaW1dh9KdGTJaAjK?^3
-l33
-L21
-VeJ4=8mC8Fkb?9Dz5A7UNY2
+DE work mem aQHj2_Q6?J@`HeSUAAkzj2
+l37
+L22
+V^g6V84[kOa?Aa;IjU3D6:2
 OE;C;6.2g;35
 31
 M2 ieee std_logic_1164
@@ -507,7 +507,7 @@ M1 ieee std_logic_1164
 o-93 -work ./work
 tExplicit 1
 Etb_risc_v_lite
-w1612352776
+w1612440210
 DP ieee numeric_std =NSdli^?T5OD8;4F<blj<3
 DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
 8../tb/tb_risc_v_lite_v2.vhd
@@ -523,9 +523,9 @@ Abhv
 DP ieee numeric_std =NSdli^?T5OD8;4F<blj<3
 DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
 DE work tb_risc_v_lite CC>3^PL8Yf>]lYjhFfIlQ2
-l68
+l69
 L12
-VJlBVS20ANjK8<VZ>JRR=g0
+VIE^a4_g2Qb2?[IHYEo8`=0
 OE;C;6.2g;35
 31
 M2 ieee std_logic_1164
