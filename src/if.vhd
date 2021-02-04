@@ -24,16 +24,17 @@ use ieee.std_logic_arith.all;
 
 entity if_stage is
 	port(
-		CLK		: in std_logic;
-		RST_n	: in std_logic;	-- Synchronous reset
-		PC_EN	: in std_logic;	-- Program counter register enable
-		PC_JP	: in std_logic_vector (31 downto 0);
-		IM_IN	: out std_logic_vector (31 downto 0);
-		IM_OUT	: in std_logic_vector(31 downto 0);
-		INSTR	: out std_logic_vector(31 downto 0);
-		PC		: buffer std_logic_vector(31 downto 0);
+		CLK			: in std_logic;
+		RST_n		: in std_logic;	-- Synchronous reset
+		ASYNC_RST_N : in std_logic;
+		PC_EN		: in std_logic;	-- Program counter register enable
+		PC_JP		: in std_logic_vector (31 downto 0);
+		IM_IN		: out std_logic_vector (31 downto 0);
+		IM_OUT		: in std_logic_vector(31 downto 0);
+		INSTR		: out std_logic_vector(31 downto 0);
+		PC			: buffer std_logic_vector(31 downto 0);
 		PC_4		: out std_logic_vector(31 downto 0);
-		PC_SEL	: in std_logic
+		PC_SEL		: in std_logic
 	);
 end if_stage;
 
@@ -56,10 +57,12 @@ begin
 	end process;
 	
 	-- PROGRAM COUNTER REGISTER
-	PC_reg : process(clk)
+	PC_reg : process(clk, ASYNC_RST_N)
 	begin
-		if CLK'event and CLK = '1' then
-			if RST_n = '0' then PC <= (others => '0');
+		if ASYNC_RST_N = '0' then
+			PC <= x"00400000";
+		elsif CLK'event and CLK = '1' then
+			if RST_n = '0' then PC <= x"00400000";
 			elsif PC_EN = '1' then
 					PC <= next_pc;
 			end if;

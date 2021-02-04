@@ -17,6 +17,7 @@ entity regfile is
 		DATA1_OUT	: out std_logic_vector(31 downto 0);
 		DATA2_OUT	: out std_logic_vector(31 downto 0);
 		RST_n		: in std_logic;
+		ASYNC_RST_N : in std_logic;
 		CLK			: in std_logic
 	);
 end regfile;
@@ -29,10 +30,13 @@ architecture bhv of regfile is
 
 begin
 	
-	memory: process(CLK, RST_n)
+	memory: process(CLK, ASYNC_RST_N)
 	begin
-		
-		if(CLK'event and CLK = '1') then	
+		if ASYNC_RST_N = '0' then
+
+			reg_file <= (OTHERS => (OTHERS => '0'));
+
+		elsif(CLK'event and CLK = '1') then	
 			
 			if(RST_n = '0') then
 				reg_file <= (OTHERS => (OTHERS => '0'));

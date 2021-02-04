@@ -62,16 +62,17 @@ architecture structure of risc_v_dp is
 
 	component if_stage
 		port
-		(	CLK		: in std_logic;
-			RST_n	: in std_logic;	-- Synchronous reset
-			PC_EN	: in std_logic;	-- Program counter register enable
-			PC_JP	: in std_logic_vector(31 downto 0);
-			IM_IN	: out std_logic_vector(31 downto 0);
-			IM_OUT	: in std_logic_vector(31 downto 0);
-			INSTR	: out std_logic_vector(31 downto 0);
-			PC		: buffer std_logic_vector(31 downto 0);
+		(	CLK			: in std_logic;
+			RST_n		: in std_logic;	-- Synchronous reset
+			ASYNC_RST_N : in std_logic;
+			PC_EN		: in std_logic;	-- Program counter register enable
+			PC_JP		: in std_logic_vector(31 downto 0);
+			IM_IN		: out std_logic_vector(31 downto 0);
+			IM_OUT		: in std_logic_vector(31 downto 0);
+			INSTR		: out std_logic_vector(31 downto 0);
+			PC			: buffer std_logic_vector(31 downto 0);
 			PC_4		: out std_logic_vector(31 downto 0);
-			PC_SEL	: in std_logic
+			PC_SEL		: in std_logic
 		);
 	end component;
 	
@@ -95,6 +96,7 @@ architecture structure of risc_v_dp is
 			RD_JAL			: in std_logic;
 			
 			CLK				: in std_logic;
+			ASYNC_RST_N		: in std_logic;
 			RST_n			: in std_logic
 		);
 	end component;
@@ -159,7 +161,7 @@ architecture structure of risc_v_dp is
 	end component;
 	
 	
-	signal if_id_instr, if_pc_out, if_pc4_out_1, if_pc4_out2, if_pc_out3, if_pc_out4 : std_logic_vector(31 downto 0);
+	signal if_id_instr, if_pc_out, if_pc4_out_1, if_pc4_out2, if_pc4_out3, if_pc4_out4 : std_logic_vector(31 downto 0);
 	signal if_pc_jump : std_logic;
 	
 	signal id_pc_in, id_pc_out, id_data1_out, id_data2_out, id_imm_out, id_pc_4_in : std_logic_vector(31 downto 0);
@@ -180,6 +182,8 @@ architecture structure of risc_v_dp is
 	signal wb_rd_out : std_logic_vector(4 downto 0);
 	
 	signal rst_jump_n : std_logic;
+
+	signal pipe_rst_n : std_logic;
 	
 begin
 	
@@ -197,16 +201,17 @@ begin
 	if_pc_jump <= PC_JAL or mem_if_branch_t;
 
 	instr_fetch: if_stage port map 
-	(	CLK		=> CLK,
-		RST_n	=> RST_n,
-		PC_EN	=> PC_EN,
-		PC_JP	=> mem_pc_in,
-		IM_IN	=> IM_IN,
-		IM_OUT	=> IM_OUT,
-		INSTR	=> if_id_instr,
-		PC		=> if_pc_out,
-		PC_4	=> if_pc4_out_1,
-		PC_SEL	=> if_pc_jump
+	(	CLK			=> CLK,
+		RST_n		=> RST_n,
+		ASYNC_RST_N => ASYNC_RST_N,
+		PC_EN		=> PC_EN,
+		PC_JP		=> mem_pc_in,
+		IM_IN		=> IM_IN,
+		IM_OUT		=> IM_OUT,
+		INSTR		=> if_id_instr,
+		PC			=> if_pc_out,
+		PC_4		=> if_pc4_out_1,
+		PC_SEL		=> if_pc_jump
 	);
 	
 	-----------------------------------------------------
@@ -238,13 +243,13 @@ begin
 	begin
 		if ASYNC_RST_N = '0' then
 
-			id_pc_4_out3	<= (others=>'0');
+			if_pc4_out3	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
 			if pipe_rst_n = '0' then
-				id_pc_4_out3	<= (others=>'0');
+				if_pc4_out3	<= (others=>'0');
 			else
-				id_pc_4_out3	<= if_pc4_out2;
+				if_pc4_out3	<= if_pc4_out2;
 			end if;
 		end if;
 	end process;
@@ -253,13 +258,13 @@ begin
 	begin
 		if ASYNC_RST_N = '0' then
 
-			id_pc_4_out4	<= (others=>'0');
+			if_pc4_out4	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
 			if pipe_rst_n = '0' then
-				id_pc_4_out4	<= (others=>'0');
+				if_pc4_out4	<= (others=>'0');
 			else
-				id_pc_4_out4	<= if_pc4_out3;
+				if_pc4_out4	<= if_pc4_out3;
 			end if;
 		end if;
 	end process;
@@ -299,6 +304,7 @@ begin
 		ALU_CTRL		=> id_alu_ctrl_out,
 		CLK				=> CLK,
 		RST_n			=> RST_n,
+		ASYNC_RST_N		=> ASYNC_RST_N,
 		PC_4_IN			=> id_pc_4_in,
 		RD_JAL			=> RD_JAL
 	);
