@@ -48,9 +48,28 @@ begin
 	
 	end process;
 				
+	-- MEMORY FORWARDING
+	-- Since the instruction can be decoded only after the data is saved into the RF,
+	-- It would lead to wait until the WB stage of the latter instruction
+	-- before decoding the new one.
+	-- To avoid this problem, a "forwarding" asynchronous mechanism is added to
+	-- make the data from RD available while it is saved into the RF.
 	
 	-- Data Read
-	DATA1_OUT <= reg_file(to_integer(unsigned(RS1)));
-	DATA2_OUT <= reg_file(to_integer(unsigned(RS2)));		
+	
+	data_read: process(RD,RS1,RS2,DATA_IN)
+	begin
+		if RS1 = RD then
+			DATA1_OUT <=  DATA_IN;
+		else
+			DATA1_OUT <= reg_file(to_integer(unsigned(RS1)));
+		end if;
+		
+		if RS2 = RD then
+			DATA2_OUT <= DATA_IN;
+		else
+			DATA2_OUT <= reg_file(to_integer(unsigned(RS2)));
+		end if;
+	end process;
 	
 end bhv;	
