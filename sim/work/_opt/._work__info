@@ -3,7 +3,7 @@ m255
 cModel Technology
 d/home/isa32/DELIVER/isa-lab-3/sim
 T_opt
-VaXXHd]]jeY`c>a6[NDb]J2
+VOVYG34]kR5i=0A2hbMzY33
 06 14 3 ./work tb_risc_v_lite bhv 0
 o-quiet -auto_acc_if_foreign -work work
 tExplicit 1
@@ -278,13 +278,13 @@ Emem
 w1612443490
 DP ieee numeric_std =NSdli^?T5OD8;4F<blj<3
 DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
-31
 8../tb/mem/mem_v2.vhd
 F../tb/mem/mem_v2.vhd
 l0
 L10
 VaQHj2_Q6?J@`HeSUAAkzj2
 OE;C;6.2g;35
+31
 o-93 -work ./work
 tExplicit 1
 Abhv
@@ -353,7 +353,7 @@ OE;C;6.2g;35
 o-93 -work ./work
 tExplicit 1
 Eregfile
-w1612351348
+w1612699480
 DP ieee numeric_std =NSdli^?T5OD8;4F<blj<3
 DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
 8../src/id/regfile.vhd
@@ -374,7 +374,7 @@ M2 ieee std_logic_1164
 M1 ieee numeric_std
 l31
 L25
-V7a<=f9EecP_K7<mazU;mc1
+VfjS58OQ23Uzo8c@7P;MIC1
 OE;C;6.2g;35
 o-93 -work ./work
 tExplicit 1
@@ -411,7 +411,7 @@ OE;C;6.2g;35
 o-93 -work ./work
 tExplicit 1
 Erisc_v_cu_pp
-w1612177609
+w1612710279
 DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
 8../src/cu/risc_v_cu_pp.vhd
 F../src/cu/risc_v_cu_pp.vhd
@@ -430,21 +430,22 @@ DE work risc_v_cu_pp Kz]N]5k1jO;4eZ3RSU`F_0
 M1 ieee std_logic_1164
 l87
 L40
-VYZk2]jNY8Tac^T9_C7JDn1
+V]b=R[:0<hhkoQXd<>V>1I3
 OE;C;6.2g;35
 o-93 -work ./work
 tExplicit 1
+w1612707887
 Erisc_v_dp
-w1612352385
+w1612711065
 DP ieee std_logic_arith GJbAT?7@hRQU9IQ702DT]2
 DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
+31
 8../src/risc_v_dp.vhd
 F../src/risc_v_dp.vhd
 l0
 L10
 V^H7]:NPOAh:8A6Zz30[OA3
 OE;C;6.2g;35
-31
 o-93 -work ./work
 tExplicit 1
 Astructure
@@ -461,7 +462,7 @@ M2 ieee std_logic_1164
 M1 ieee std_logic_arith
 l188
 L50
-VU2@zd`PV^0NQBo1dQ6U_@3
+Vj0m>>Gc1EP^X`jiPZYV631
 OE;C;6.2g;35
 o-93 -work ./work
 tExplicit 1
@@ -469,13 +470,13 @@ Erisc_v_lite
 w1612177609
 DP ieee numeric_std =NSdli^?T5OD8;4F<blj<3
 DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
+31
 8../src/risc_v.vhd
 F../src/risc_v.vhd
 l0
 L8
 V3U8Fg2R2X_WZSBK1=9J>b3
 OE;C;6.2g;35
-31
 o-93 -work ./work
 tExplicit 1
 Astructure

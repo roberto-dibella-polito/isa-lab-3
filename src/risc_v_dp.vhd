@@ -205,7 +205,7 @@ begin
 		RST_n		=> RST_n,
 		ASYNC_RST_N => ASYNC_RST_N,
 		PC_EN		=> PC_EN,
-		PC_JP		=> mem_pc_in,
+		PC_JP		=> ex_pc_out,
 		IM_IN		=> IM_IN,
 		IM_OUT		=> IM_OUT,
 		INSTR		=> if_id_instr,
@@ -305,7 +305,7 @@ begin
 		CLK				=> CLK,
 		RST_n			=> RST_n,
 		ASYNC_RST_N		=> ASYNC_RST_N,
-		PC_4_IN			=> id_pc_4_in,
+		PC_4_IN			=> id_pc4_out3,
 		RD_JAL			=> RD_JAL
 	);
 	
@@ -393,7 +393,7 @@ begin
 			mem_zero_in <= '0';
 		
 		elsif (clk'event and clk ='1') then
-			if pipe_rst_n = '0' then
+			if rst_n = '0' then
 				mem_pc_in 	<= (others=>'0');
 				mem_alu_in 	<= (others=>'0');
 				mem_data_in <= (others=>'0');

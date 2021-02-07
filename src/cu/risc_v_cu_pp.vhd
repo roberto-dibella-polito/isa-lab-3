@@ -222,7 +222,7 @@ begin
 			
 	-- ID stage controls
 	ID_WR_EN	<= wb_id_wr_en_in;
-	RD_JAL		<= wb_rd_jal_in;
+	RD_JAL		<= ex_rd_jal_out;
 	
 	-- EX stage controls
 	IMM_OP		<= ex_imm_op_in;
