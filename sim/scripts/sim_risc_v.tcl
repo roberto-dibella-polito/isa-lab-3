@@ -45,13 +45,16 @@ add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/instr_fetch/instr
 add wave -divider "ID"
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/instr_decode/memory/reg_file 
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/instr_decode/instruction
-add wave -radix decimal sim:/tb_risc_v_lite/dut/datapath/instr_decode/memory/rs1
-add wave -radix decimal sim:/tb_risc_v_lite/dut/datapath/instr_decode/memory/rs2
+add wave -radix unsigned sim:/tb_risc_v_lite/dut/datapath/instr_decode/memory/rs1
+add wave -radix unsigned sim:/tb_risc_v_lite/dut/datapath/instr_decode/memory/rs2
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/instr_decode/data1_out
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/instr_decode/data2_out
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/instr_decode/immediate
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/instr_decode/alu_ctrl
-add wave -radix decimal sim:/tb_risc_v_lite/dut/datapath/instr_decode/memory/rd
+add wave -radix unsigned sim:/tb_risc_v_lite/dut/datapath/instr_decode/memory/rd
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/instr_decode/memory/data_in
+
+
 
 add wave -divider "EX"
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/execute/pc_alu_unit/pc_in
@@ -65,8 +68,8 @@ add wave sim:/tb_risc_v_lite/dut/datapath/execute/alu_op
 
 add wave -divider "MEM"
 add wave -radix hexadecimal sim:/tb_risc_v_lite/data_mem/addr
-add wave -radix decimal sim:/tb_risc_v_lite/data_mem/addr_1
-add wave -radix decimal sim:/tb_risc_v_lite/data_mem/addr_2
+add wave -radix unsigned sim:/tb_risc_v_lite/data_mem/addr_1
+add wave -radix unsigned sim:/tb_risc_v_lite/data_mem/addr_2
 add wave -radix hexadecimal sim:/tb_risc_v_lite/data_mem/data_out
 add wave -radix hexadecimal sim:/tb_risc_v_lite/data_mem/data_in
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/memory/imm_out
