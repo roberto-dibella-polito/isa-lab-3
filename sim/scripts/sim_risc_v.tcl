@@ -111,7 +111,23 @@ add wave -radix decimal sim:/tb_risc_v_lite/data_mem/m2(3)
 add wave -radix decimal sim:/tb_risc_v_lite/data_mem/m2(4)
 add wave -radix decimal sim:/tb_risc_v_lite/data_mem/m2(5)
 add wave -radix decimal sim:/tb_risc_v_lite/data_mem/m2(6)
+add wave -radix decimal sim:/tb_risc_v_lite/data_mem/m2(9)
 
+add wave -divider "PIPELINE"
+add wave -divider "ID/EX"
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/ex_pc_in
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/ex_data1_in
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/ex_data2_in
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/ex_alu_ctrl_in
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/ex_rd_in
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/ex_imm_in
 
+add wave -divider "EX/MEM"
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/mem_pc_in
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/mem_data_in
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/mem_alu_in
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/mem_zero_in
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/mem_rd_in
+add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/mem_imm_in
 
 run 195 ns
