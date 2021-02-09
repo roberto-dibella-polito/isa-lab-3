@@ -10,7 +10,7 @@ D 26 ./work.ex_stage(structure) ]Dcn^XjgR4k75O[H_Y:lJ2 9 1
 D 20 ./work.id_stage(bhv) 1I1Tkz?eQ?nj@Nz;nBBY13 5 1
 D 20 ./work.if_stage(bhv) :=?>UR_idR7kYzmWXfaMo3 2 1
 D 19 ./work.imm_gen(bhv) bl`d9h50N0X`FHNh<589V2 4 1
-D 30 ./work.instruction_memory(bhv) <NDB:O7iV@d>]iO1OVTid2 19 1
+D 30 ./work.instruction_memory(bhv) cc1Rmhae;^MK=aZ9135ZJ3 19 1
 D 15 ./work.mem(bhv) ^g6V84[kOa?Aa;IjU3D6:2 16 1
 D 27 ./work.mem_stage(structure) 6T<fW`WNP6Hd^Pe4LnSAe2 10 1
 D 18 ./work.pc_alu(bhv) mGZmQjNYh;6=^EMQz;`6M0 6 1
@@ -24,7 +24,7 @@ D 30 ./work.riscv_lite_instructions EE?dgPYdkI:CoXH5jJ;ge1 1 1
 D 26 ./work.tb_risc_v_lite(bhv) IE^a4_g2Qb2?[IHYEo8`=0 20 1
 D 26 ./work.wb_stage(structure) n=7_:HWinIf_8InQzXYN<2 11 1
 2 0  0 fDD82SX6QO15ahOezAS[?0 20 20 1
-2 0  0 >[mI?=G29J7]`592lOgb_2 19 19 1
+2 0  0 M5SL`_?M6WL>@kfadeRMm3 19 19 1
 2 0  0 <jE[7Z0nR<Zd>5aHCQ02C1 2 2 1
 2 0  0 hRR]M[9`0QM?jQTD1B]JL1 3 3 1
 2 0  0 ?Nl@I?9<k_anEZKXAcM4^3 4 4 1

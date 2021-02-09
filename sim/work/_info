@@ -3,7 +3,7 @@ m255
 cModel Technology
 d/home/isa32/DELIVER/isa-lab-3/sim
 T_opt
-Vf@49cV7MD]IQ^Tak47KC;1
+VTZz3Ck:^XCebKGlGh070i0
 06 14 3 ./work tb_risc_v_lite bhv 0
 o-quiet -auto_acc_if_foreign -work work
 tExplicit 1
@@ -238,13 +238,13 @@ M1 work riscv_lite_instructions
 o-93 -work ./work
 tExplicit 1
 Einstruction_memory
-w1612869346
+w1612354454
 DP std textio K]Z^fghZ6B=BjnK5NomDT3
 DP ieee std_logic_textio 8YS?iX`WD1REQG`ZRYQGB2
 DP ieee numeric_std =NSdli^?T5OD8;4F<blj<3
 DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
-8../tb/if/instruction_memory_v2_mod.vhd
-F../tb/if/instruction_memory_v2_mod.vhd
+8../tb/if/instruction_memory_v2.vhd
+F../tb/if/instruction_memory_v2.vhd
 l0
 L15
 V2;di2Cg?o5[ZKBhzE<2X?0
@@ -260,7 +260,7 @@ DP ieee std_logic_1164 GH1=`jDDBJ=`LM;:Ak`kf2
 DE work instruction_memory 2;di2Cg?o5[ZKBhzE<2X?0
 l60
 L22
-V<NDB:O7iV@d>]iO1OVTid2
+Vcc1Rmhae;^MK=aZ9135ZJ3
 OE;C;6.2g;35
 31
 M4 ieee std_logic_1164
