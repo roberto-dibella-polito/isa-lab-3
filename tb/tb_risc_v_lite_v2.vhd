@@ -115,6 +115,7 @@ begin
 	test: process
 	begin
 
+		rst_n <= '1';
 		async_rst_n <= '0';
 		wait for 3 ns;
 		async_rst_n <= '1';

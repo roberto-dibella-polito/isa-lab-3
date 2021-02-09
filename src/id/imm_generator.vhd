@@ -31,7 +31,8 @@ begin
 		variable left_shift : signed(10 downto 0) := (others => '0');
 	
 	begin
-		
+		left_shift := (others=>'0');
+	
 		-- I-type
 		if( (opcode = "00000") or (opcode = "00100") ) then
 			

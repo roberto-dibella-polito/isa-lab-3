@@ -1,0 +1,73 @@
+Information: Updating design information... (UID-85)
+Warning: Design 'risc_v_lite' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Warning: There are infeasible paths detected in your design that were ignored during optimization. Please run 'report_timing -attributes' and/or 'create_qor_snapshot/query_qor_snapshot -infeasible_paths' to identify these paths.  (OPT-1721)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : risc_v_lite
+Version: O-2018.06-SP4
+Date   : Tue Feb  9 15:01:32 2021
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+  Startpoint: control_unit/ex_imm_op_in_reg
+              (rising edge-triggered flip-flop clocked by MY_CLK)
+  Endpoint: datapath/mem_alu_in_reg[2]
+            (rising edge-triggered flip-flop clocked by MY_CLK)
+  Path Group: MY_CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  risc_v_lite        5K_hvratio_1_1        NangateOpenCellLibrary
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock MY_CLK (rise edge)                                0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  control_unit/ex_imm_op_in_reg/CK (SDFFR_X1)             0.00 #     0.00 r
+  control_unit/ex_imm_op_in_reg/Q (SDFFR_X1)              0.08       0.08 f
+  control_unit/IMM_OP (risc_v_cu_pp)                      0.00       0.08 f
+  datapath/IMM_OP (risc_v_dp)                             0.00       0.08 f
+  datapath/execute/IMM_OP (ex_stage)                      0.00       0.08 f
+  datapath/execute/U6/Z (BUF_X1)                          0.05       0.13 f
+  datapath/execute/U5/Z (MUX2_X2)                         0.10       0.23 r
+  datapath/execute/ALU_unit/D2[0] (ALU)                   0.00       0.23 r
+  datapath/execute/ALU_unit/U89/ZN (OR2_X1)               0.05       0.28 r
+  datapath/execute/ALU_unit/U223/ZN (INV_X1)              0.03       0.31 f
+  datapath/execute/ALU_unit/U434/ZN (AOI22_X1)            0.06       0.36 r
+  datapath/execute/ALU_unit/U435/ZN (OAI221_X1)           0.05       0.41 f
+  datapath/execute/ALU_unit/U436/ZN (AOI22_X1)            0.06       0.47 r
+  datapath/execute/ALU_unit/U437/ZN (OAI221_X1)           0.05       0.53 f
+  datapath/execute/ALU_unit/U438/ZN (INV_X1)              0.03       0.56 r
+  datapath/execute/ALU_unit/U63/Z (MUX2_X1)               0.04       0.60 r
+  datapath/execute/ALU_unit/U439/ZN (OAI21_X1)            0.03       0.63 f
+  datapath/execute/ALU_unit/U60/ZN (AOI211_X1)            0.05       0.68 r
+  datapath/execute/ALU_unit/U441/ZN (OAI211_X1)           0.04       0.73 f
+  datapath/execute/ALU_unit/ALU_OUT[2] (ALU)              0.00       0.73 f
+  datapath/execute/ALU_OUT[2] (ex_stage)                  0.00       0.73 f
+  datapath/U316/ZN (AND2_X1)                              0.04       0.77 f
+  datapath/mem_alu_in_reg[2]/D (DFFR_X1)                  0.01       0.78 f
+  data arrival time                                                  0.78
+
+  clock MY_CLK (rise edge)                                0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  clock uncertainty                                      -0.07      -0.07
+  datapath/mem_alu_in_reg[2]/CK (DFFR_X1)                 0.00      -0.07 r
+  library setup time                                     -0.04      -0.11
+  data required time                                                -0.11
+  --------------------------------------------------------------------------
+  data required time                                                -0.11
+  data arrival time                                                 -0.78
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -0.88
+
+
+1
