@@ -123,13 +123,13 @@ constant SW_OP 		: std_logic_vector(OP_SIZE-1 downto 0) 		:= "01000";
 constant SW_FUNC3	: std_logic_vector(FUNC3_SIZE-1 downto 0) 	:= "010";
 
 ------------------------------------------------------------------------------
--- ROTATE RIGHT --
+-- MODULO --
 ------------------------------------------------------------------------------
 
--- ROR 
+-- MOD 
 -- I-TYPE
-constant ROR_OP 	: std_logic_vector(OP_SIZE-1 downto 0) 		:= "00010";
-constant ROR_FUNC3	: std_logic_vector(FUNC3_SIZE-1 downto 0) 	:= "101";
-constant ROR_FUNC7	: std_logic_vector(FUNC7_SIZE-1 downto 0) 	:= "0100000";
+constant MOD_OP 	: std_logic_vector(OP_SIZE-1 downto 0) 		:= "00010";
+constant MOD_FUNC3	: std_logic_vector(FUNC3_SIZE-1 downto 0) 	:= "101";
+
 
 end riscv_lite_instructions;

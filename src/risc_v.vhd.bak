@@ -1,0 +1,170 @@
+-- RISC-V
+-- Top-level entity
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity risc_v_lite is 
+	port
+	(
+		CLK 		: in std_logic;
+		ASYNC_RST_N	: in std_logic;
+		RST_N		: in std_logic;
+		
+		-- INSTRUCTION MEMORY INTERFACE
+		IM_IN		: out std_logic_vector (31 downto 0);
+		IM_OUT		: in std_logic_vector(31 downto 0);
+		
+		-- Memory interface
+		MEM_IN		: out std_logic_vector(31 downto 0);
+		MEM_ADDR	: out std_logic_vector(31 downto 0);
+		MEM_OUT 	: in std_logic_vector(31 downto 0);
+		MEM_EN		: out std_logic;
+	);
+end risc_v_lite;
+
+architecure structure of risc_v_lite is
+	
+	component risc_v_dp 
+		port
+		(	
+			CLK			: in std_logic;
+			RST_n		: in std_logic;
+			ASYNC_RST_N	: in std_logic;
+			
+			-- IF stage controls
+			PC_EN		: in std_logic;
+			PC_JAL		: in std_logic;
+			
+			-- Instruction Memory
+			IM_IN		: out std_logic_vector (31 downto 0);
+			IM_OUT		: in std_logic_vector(31 downto 0);
+
+			-- ID stage controls
+			ID_WR_EN	: in std_logic;
+			OPCODE		: out std_logic_vector(4 downto 0);
+			RD_JAL		: in std_logic;
+			
+			-- EX stage controls
+			IMM_OP		: in std_logic;
+			ALU_OP		: in std_logic_vector(1 downto 0);
+			
+			-- MEM stage controls
+			MEM_WR_EN	: in std_logic;
+			BRANCH		: in std_logic;
+			
+			-- Memory interface
+			MEM_IN		: out std_logic_vector(31 downto 0);
+			MEM_ADDR	: out std_logic_vector(31 downto 0);
+			MEM_OUT 	: in std_logic_vector(31 downto 0);
+			MEM_EN		: out std_logic;
+			
+			-- WB stage controls
+			WB_SEL		: in std_logic_vector(1 downto 0)
+			
+		);
+	end component;
+	
+	component risc_v_cu_pp is
+		port
+		(	CLK			: in std_logic;
+			RST_n		: out std_logic;
+			ASYNC_RST_N	: in std_logic;
+			GLOBAL_RST_n: in std_logic;
+			
+			-- IF stage controls
+			PC_EN		: out std_logic;
+			PC_SEL		: out std_logic;
+			
+			-- ID stage controls
+			ID_WR_EN	: out std_logic;
+			OPCODE		: in std_logic_vector(4 downto 0);
+			RD_JAL		: out std_logic;
+			
+			-- EX stage controls
+			IMM_OP		: out std_logic;
+			ALU_OP		: out std_logic_vector(1 downto 0);
+			ZERO		: in std_logic;
+			
+			-- MEM stage controls
+			MEM_WR_EN	: out std_logic;
+			BRANCH		: out std_logic;
+			
+			-- WB stage controls
+			WB_SEL		: out std_logic_vector(1 downto 0)
+		);
+	end component;
+	
+	signal i_rst_n, i_pc_en, i_pc_sel, i_id_wr_en, i_imm_op, i_zero, i_mem_wr_en, i_rst_n, i_rd_jal, i_branch : std_logic;
+	signal i_opcode : std_logic_vector(4 downto 0);
+	signal i_alu_op, i_wb_sel : std_logic_vector(1 downto 0);
+	
+begin
+	
+	datapath: risc_v_dp port map
+		(	
+			CLK			=> CLK,
+			RST_n		=> i_rst_n,
+			ASYNC_RST_N	=> async_rst_n
+			
+			-- IF stage controls
+			PC_EN		=> i_pc_en,
+			PC_JAL		=> i_pc_sel,
+			
+			-- Instruction Memory
+			IM_IN		=> IM_IN,
+			IM_OUT		=> IM_OUT,
+
+			-- ID stage controls
+			ID_WR_EN	=> i_id_wr_en,
+			OPCODE		=> i_opcode,
+			RD_JAL		=> i_rd_jal,
+			
+			-- EX stage controls
+			IMM_OP		=> i_imm_op,
+			ALU_OP		=> i_alu_op,
+			
+			-- MEM stage controls
+			MEM_WR_EN	=> i_mem_wr_en,
+			BRANCH		=> i_branch,
+			
+			-- Memory interface
+			MEM_IN		=> MEM_IN,
+			MEM_ADDR	=> MEM_ADDR,
+			MEM_OUT 	=> MEM_OUT,
+			MEM_EN		=> MEM_EN,
+			
+			-- WB stage controls
+			WB_SEL		=> i_wb_sel
+			
+		);
+	
+	control_unit: risc_v_cu_pp port map
+		(	CLK			=> CLK,
+			RST_n		=> i_rst_n,
+			ASYNC_RST_N	=> ASYNC_RST_N,
+			GLOBAL_RST_n=> RST_N,
+
+			-- IF stage controls
+			PC_EN		=> i_pc_en,
+			PC_SEL		=> i_pc_sel,
+			
+			-- ID stage controls
+			ID_WR_EN	=> i_id_wr_en,
+			OPCODE		=> i_opcode,
+			RD_JAL		=> i_rd_jal,
+			
+			-- EX stage controls
+			IMM_OP		=> i_imm_op,
+			ALU_OP		=> i_alu_op,
+			--ZERO		=> i_zero,
+			
+			-- MEM stage controls
+			MEM_WR_EN	: out std_logic;
+			
+			-- WB stage controls
+			WB_SEL		: out std_logic_vector(1 downto 0)
+		);
+
+end risc_v;
