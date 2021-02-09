@@ -52,7 +52,7 @@ begin
 	
 	IMM_OUT <= IMM_IN;
 	
-	BRANCH_T <= ZERO and BRANCH;
+	BRANCH_T <= BRANCH and ZERO after 1 ns;
 	
 end structure;
 	

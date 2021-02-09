@@ -32,6 +32,7 @@ architecture structure of risc_v_lite is
 			CLK			: in std_logic;
 			RST_n		: in std_logic;
 			ASYNC_RST_N	: in std_logic;
+			BRANCH_T	: out std_logic;
 			
 			-- IF stage controls
 			PC_EN		: in std_logic;
@@ -72,6 +73,7 @@ architecture structure of risc_v_lite is
 			RST_n		: out std_logic;
 			ASYNC_RST_N	: in std_logic;
 			GLOBAL_RST_n: in std_logic;
+			BRANCH_T	: in std_logic;
 			
 			-- IF stage controls
 			PC_EN		: out std_logic;
@@ -95,7 +97,7 @@ architecture structure of risc_v_lite is
 		);
 	end component;
 	
-	signal i_rst_n, i_pc_en, i_pc_sel, i_id_wr_en, i_imm_op, i_zero, i_mem_wr_en, i_rd_jal, i_branch : std_logic;
+	signal i_rst_n, i_pc_en, i_pc_sel, i_id_wr_en, i_imm_op, i_zero, i_mem_wr_en, i_rd_jal, i_branch, i_pp_flush : std_logic;
 	signal i_opcode : std_logic_vector(4 downto 0);
 	signal i_alu_op, i_wb_sel : std_logic_vector(1 downto 0);
 	
@@ -106,6 +108,7 @@ begin
 			CLK			=> CLK,
 			RST_n		=> i_rst_n,
 			ASYNC_RST_N	=> async_rst_n,
+			BRANCH_T	=> i_pp_flush,
 			
 			-- IF stage controls
 			PC_EN		=> i_pc_en,
@@ -144,6 +147,7 @@ begin
 			RST_n		=> i_rst_n,
 			ASYNC_RST_N	=> ASYNC_RST_N,
 			GLOBAL_RST_n=> RST_N,
+			BRANCH_T	=> i_pp_flush,
 
 			-- IF stage controls
 			PC_EN		=> i_pc_en,

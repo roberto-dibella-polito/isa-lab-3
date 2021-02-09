@@ -13,6 +13,7 @@ entity risc_v_dp is
 		CLK			: in std_logic;
 		RST_n		: in std_logic;
 		ASYNC_RST_N	: in std_logic;
+		BRANCH_T	: out std_logic;
 		
 		-- IF stage controls
 		PC_EN		: in std_logic;
@@ -97,7 +98,8 @@ architecture structure of risc_v_dp is
 			
 			CLK				: in std_logic;
 			ASYNC_RST_N		: in std_logic;
-			RST_n			: in std_logic
+			RST_n			: in std_logic;
+			INSTR_RST_N		: in std_logic
 		);
 	end component;
 
@@ -194,6 +196,7 @@ begin
 	
 	
 	
+	
 	----------------------------------------------------
 	-- INSTRUCTION FETCH STAGE
 	----------------------------------------------------
@@ -205,7 +208,7 @@ begin
 		RST_n		=> RST_n,
 		ASYNC_RST_N => ASYNC_RST_N,
 		PC_EN		=> PC_EN,
-		PC_JP		=> ex_pc_out,
+		PC_JP		=> mem_pc_in,
 		IM_IN		=> IM_IN,
 		IM_OUT		=> IM_OUT,
 		INSTR		=> if_id_instr,
@@ -246,7 +249,7 @@ begin
 			if_pc4_out3	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
-			if pipe_rst_n = '0' then
+			if rst_n = '0' then
 				if_pc4_out3	<= (others=>'0');
 			else
 				if_pc4_out3	<= if_pc4_out2;
@@ -261,7 +264,7 @@ begin
 			if_pc4_out4	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
-			if pipe_rst_n = '0' then
+			if rst_n = '0' then
 				if_pc4_out4	<= (others=>'0');
 			else
 				if_pc4_out4	<= if_pc4_out3;
@@ -276,7 +279,7 @@ begin
 			id_pc_4_in	<= (others=>'0');
 		
 		elsif (clk'event and clk ='1') then
-			if pipe_rst_n = '0' then
+			if rst_n = '0' then
 				id_pc_4_in	<= (others=>'0');
 			else
 				id_pc_4_in	<= if_pc4_out4;
@@ -305,8 +308,9 @@ begin
 		CLK				=> CLK,
 		RST_n			=> RST_n,
 		ASYNC_RST_N		=> ASYNC_RST_N,
-		PC_4_IN			=> id_pc4_out3,
-		RD_JAL			=> RD_JAL
+		PC_4_IN			=> id_pc_4_in,
+		RD_JAL			=> RD_JAL,
+		INSTR_RST_N		=> pipe_rst_n
 	);
 	
 	-----------------------------------------------------
@@ -393,7 +397,7 @@ begin
 			mem_zero_in <= '0';
 		
 		elsif (clk'event and clk ='1') then
-			if rst_n = '0' then
+			if pipe_rst_n = '0' then
 				mem_pc_in 	<= (others=>'0');
 				mem_alu_in 	<= (others=>'0');
 				mem_data_in <= (others=>'0');
@@ -441,6 +445,8 @@ begin
 		MEM_OUT => MEM_OUT,
 		MEM_EN	=> MEM_EN
 	);
+	
+	BRANCH_T <= mem_if_branch_t;
 
 	-----------------------------------------------------
 	-- MEM-WB PIPELINING

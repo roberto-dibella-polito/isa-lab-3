@@ -52,7 +52,7 @@ begin
 	-- Used for BEQ -> ALU_CTRL 100
 	zero_flag: process(adder_out)
 	begin
-		if unsigned(adder_out) = 0 then
+		if (d1_signed - d2_signed) = 0 then
 			ZERO <= '1';
 		else
 			ZERO <= '0';

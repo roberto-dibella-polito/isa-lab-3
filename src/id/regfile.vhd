@@ -57,15 +57,15 @@ begin
 	
 	-- Data Read
 	
-	data_read: process(RD,RS1,RS2,DATA_IN)
+	data_read: process(RD,RS1,RS2,DATA_IN,WR_EN)
 	begin
-		if RS1 = RD then
+		if RS1 = RD and WR_EN = '1' then
 			DATA1_OUT <=  DATA_IN;
 		else
 			DATA1_OUT <= reg_file(to_integer(unsigned(RS1)));
 		end if;
 		
-		if RS2 = RD then
+		if RS2 = RD and WR_EN = '1' then
 			DATA2_OUT <= DATA_IN;
 		else
 			DATA2_OUT <= reg_file(to_integer(unsigned(RS2)));

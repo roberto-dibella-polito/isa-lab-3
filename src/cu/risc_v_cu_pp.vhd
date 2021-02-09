@@ -13,6 +13,7 @@ entity risc_v_cu_pp is
 		RST_n		: out std_logic;
 		ASYNC_RST_N	: in std_logic;
 		GLOBAL_RST_n: in std_logic;
+		BRANCH_T	: in std_logic;
 		
 		-- IF stage controls
 		PC_EN		: out std_logic;
@@ -76,13 +77,15 @@ architecture structure of risc_v_cu_pp is
 	signal ex_alu_op_in, ex_wb_sel_in : std_logic_vector(1 downto 0);
 	
 	
-	signal ex_mem_wr_en_out, ex_branch_out, ex_rd_jal_out, ex_id_wr_en_out : std_logic;
+	signal ex_mem_wr_en_out, ex_branch_out, ex_rd_jal_out, ex_id_wr_en_out, ex_pc_sel_out : std_logic;
 	signal ex_wb_sel_out, mem_wb_sel_in : std_logic_vector(1 downto 0);
-	signal mem_mem_wr_en_in, mem_branch_in, mem_rd_jal_in, mem_id_wr_en_in : std_logic;	
+	signal mem_mem_wr_en_in, mem_branch_in, mem_rd_jal_in, mem_id_wr_en_in, mem_pc_sel_in : std_logic;	
 
 	signal mem_rd_jal_out, mem_id_wr_en_out : std_logic;
 	signal wb_rd_jal_in, wb_id_wr_en_in : std_logic;
 	signal wb_wb_sel_in, mem_wb_sel_out : std_logic_vector(1 downto 0);
+
+	signal pp_flush, i_pc_sel : std_logic;
 
 begin
 
@@ -128,7 +131,7 @@ begin
 			ex_pc_sel_in	<= '0';
 		
 		elsif (clk'event and clk ='1') then
-			if global_rst_n = '0' then
+			if global_rst_n = '0' or i_pc_sel = '1' or BRANCH_T = '1' then
 				ex_imm_op_in	<= '0';
 				ex_mem_wr_en_in	<= '0'; 
 				ex_branch_in	<= '0';
@@ -150,6 +153,8 @@ begin
 		end if;
 	end process;
 	
+	pp_flush <= i_pc_sel or BRANCH_T;
+
 	-- EX IN/OUT INTERNAL CONNECTIONS
 	
 	ex_mem_wr_en_out <= ex_mem_wr_en_in;
@@ -157,6 +162,7 @@ begin
 	ex_id_wr_en_out <= ex_id_wr_en_in;
 	ex_rd_jal_out <= ex_rd_jal_in;
 	ex_wb_sel_out <= ex_wb_sel_in;
+	ex_pc_sel_out <= ex_pc_sel_in;
 	
 	ex_mem_cu_pp: process(CLK, ASYNC_RST_N)
 	begin
@@ -167,20 +173,23 @@ begin
 			mem_wb_sel_in		<= (others=>'0');
 			mem_rd_jal_in		<= '0';
 			mem_id_wr_en_in		<= '0';
+			mem_pc_sel_in		<= '0';
 		
 		elsif (clk'event and clk ='1') then
-			if global_rst_n = '0' then
+			if (global_rst_n = '0') or i_pc_sel = '1' or BRANCH_T = '1' then
 				mem_mem_wr_en_in	<= '0'; 
 				mem_branch_in		<= '0';
 				mem_wb_sel_in		<= (others=>'0');
 				mem_rd_jal_in		<= '0';
 				mem_id_wr_en_in		<= '0';
+				mem_pc_sel_in		<= '0';
 			else
 				mem_mem_wr_en_in	<= ex_mem_wr_en_out; 
 				mem_branch_in		<= ex_branch_out;
 				mem_wb_sel_in		<= ex_wb_sel_out;
 				mem_rd_jal_in		<= ex_rd_jal_out;
 				mem_id_wr_en_in		<= ex_id_wr_en_out;
+				mem_pc_sel_in		<= ex_pc_sel_out;
 			end if;
 		end if;
 	end process;
@@ -218,11 +227,12 @@ begin
 	-- CONNECTION TO THE OUTPUT
 	--------------------------------------------
 	
-	PC_SEL		<= ex_pc_sel_in;
+	PC_SEL		<= mem_pc_sel_in;
+	i_pc_sel	<= mem_pc_sel_in;
 			
 	-- ID stage controls
 	ID_WR_EN	<= wb_id_wr_en_in;
-	RD_JAL		<= ex_rd_jal_out;
+	RD_JAL		<= wb_rd_jal_in;
 	
 	-- EX stage controls
 	IMM_OP		<= ex_imm_op_in;

@@ -222,7 +222,7 @@ begin
 				ID_WR_EN	<= '0';
 				RD_JAL		<= '0';
 				--------------------------- EX
-				IMM_OP		<= '1';
+				IMM_OP		<= '0';
 				ALU_OP		<= ALU_OP_ADD;
 				--------------------------- MEM
 				MEM_WR_EN	<= '0';

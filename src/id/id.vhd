@@ -26,7 +26,8 @@ entity id_stage is
 		
 		CLK				: in std_logic;
 		ASYNC_RST_N 	: in std_logic;
-		RST_n			: in std_logic
+		RST_n			: in std_logic;
+		INSTR_RST_N		: in std_logic
 	);
 end id_stage;
 
@@ -93,7 +94,7 @@ begin
 		if(ASYNC_RST_n = '0') then
 			instruction <= (others => '0');
 		elsif( CLK'event and CLK = '1') then
-			if(RST_n = '0') then
+			if(RST_n = '0' or INSTR_RST_N ='0') then
 				instruction <= (others => '0');
 			else
 				instruction <= INSTR_IN;
