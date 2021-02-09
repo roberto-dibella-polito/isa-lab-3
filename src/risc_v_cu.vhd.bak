@@ -39,7 +39,7 @@ end risc_v_cu;
 
 architecture fsm of risc_v_cu is
 
-	type state_type is (LW,MODULE,IMM,AUIPC,SW,OP,LUI,BEQ,JAL,NOP);
+	type state_type is (LW,ROTR,IMM,AUIPC,SW,OP,LUI,BEQ,JAL,NOP);
 	
 	signal state, next_state : state_type := NOP;
 
@@ -51,7 +51,7 @@ begin
 		case OPCODE is
 			
 			when LW_OP => next_state <= LW;
-			when MOD_OP => next_state <= MODULE;
+			when ROR_OP => next_state <= ROTR;
 			when ADDI_OP => next_state <= IMM;
 			when AUIPC_OP => next_state <= AUIPC;
 			when SW_OP => next_state <= SW;
@@ -104,7 +104,7 @@ begin
 				--------------------------- WB
 				WB_SEL		<= "00";
 				
-			when MODULE =>
+			when ROTR =>
 				
 				RST_n		<= '1';
 				--------------------------- IF 
@@ -114,8 +114,8 @@ begin
 				ID_WR_EN	<= '1';
 				RD_JAL		<= '0';
 				--------------------------- EX
-				IMM_OP		<= '0';
-				ALU_OP		<= ALU_OP_MOD;
+				IMM_OP		<= '1';
+				ALU_OP		<= ALU_OP_ROTR;
 				--------------------------- MEM
 				MEM_WR_EN	<= '0';
 				BRANCH		<= '0';
@@ -172,7 +172,6 @@ begin
 				ALU_OP		<= ALU_OP_IMM;
 				--------------------------- MEM
 				MEM_WR_EN	<= '1';
-				BRANCH		<= '0';
 				--------------------------- WB
 				WB_SEL		<= "11";
 				
@@ -201,7 +200,7 @@ begin
 				PC_EN		<= '1';
 				PC_SEL		<= '0';				
 				--------------------------- ID
-				ID_WR_EN	<= '1';
+				ID_WR_EN	<= '0';
 				RD_JAL		<= '0';
 				--------------------------- EX
 				IMM_OP		<= '1';
@@ -217,7 +216,7 @@ begin
 				RST_n		<= '1';
 				--------------------------- IF 
 				PC_EN		<= '1';
-				PC_SEL		<= '0';				
+				PC_SEL		<= '1';				
 				--------------------------- ID
 				ID_WR_EN	<= '0';
 				RD_JAL		<= '0';
