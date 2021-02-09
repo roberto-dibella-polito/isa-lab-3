@@ -130,4 +130,4 @@ add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/mem_zero_in
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/mem_rd_in
 add wave -radix hexadecimal sim:/tb_risc_v_lite/dut/datapath/mem_imm_in
 
-run 195 ns
+run 2500 ns

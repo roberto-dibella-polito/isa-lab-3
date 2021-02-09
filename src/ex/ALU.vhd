@@ -28,8 +28,9 @@ architecture bhv of ALU is
 	signal lui_out		: std_logic_vector(31 downto 0);
 	signal mod_out		: std_logic_vector(31 downto 0);
 	
-	signal data_xor	: std_logic_vector(31 downto 0); -- Used to temporary store the data to rotate
-	
+	signal data_xor,data_sign, data_sign_ext	: std_logic_vector(31 downto 0); -- Used to temporary store the data to rotate
+	signal data_zero : std_logic_vector(31 downto 0);	
+
 	signal d1_signed, d2_signed : signed(31 downto 0);
 	
 	
@@ -79,11 +80,16 @@ begin
 	shift_out <= std_logic_vector(shift_right(d1_signed, to_integer(d2_signed)));
 	
 	-- Modulo
-	data_xor <= D1 xor D1(31);
-	mod_out <= data_xor + D1(31);
+	data_zero <= (others=>'0');
+	data_sign <= (others=> D1(31));
+	data_sign_ext <= data_zero(31 downto 1) & D1(31);
+	data_xor <= D1 xor data_sign;
+	
+	mod_out <= std_logic_vector(unsigned(data_xor) + unsigned(data_sign_ext));
+
 	
 	-- Output mux
-	out_mux: process(ALU_CTRL, adder_out, compare_out, and_out, xor_out, shift_out, rotr_out)
+	out_mux: process(ALU_CTRL, adder_out, compare_out, and_out, xor_out, shift_out, mod_out)
 	begin
 		
 		case ALU_CTRL is
