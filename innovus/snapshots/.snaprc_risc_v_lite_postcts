@@ -1,0 +1,21 @@
+#----------------------------------------------------------
+# snapshots/.snaprc_risc_v_lite_postcts : snapshot resource file                          
+# label = risc_v_lite_postcts                                      
+#----------------------------------------------------------
+set tmpstr ""
+set tmpbar ""
+lappend tmpstr "dir" $sdir
+lappend tmpstr "label" risc_v_lite_postcts
+lappend tmpstr "fplan" $sdir/ss_risc_v_lite_postcts.fplan.gif
+lappend tmpstr "amoeba" $sdir/ss_risc_v_lite_postcts.amoeba.gif
+lappend tmpstr "place" $sdir/ss_risc_v_lite_postcts.place.gif
+lappend tmpstr "trgGlbOverflowPctH" 0
+lappend tmpstr "trgGlbOverflowPctV" 0
+lappend tmpbar "Congestion"
+lappend tmpstr "Congestion" 0
+lappend tmpbar WNS
+lappend tmpstr WNS 0.013
+lappend tmpbar TNS
+lappend tmpstr TNS 0.0
+lappend tmpbar Overlap
+lappend tmpstr Overlap 0

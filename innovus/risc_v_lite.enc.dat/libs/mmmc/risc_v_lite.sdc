@@ -1,0 +1,1 @@
+/home/isa32/DELIVER/isa-lab-3/netlist/risc_v_lite.sdc
