@@ -2,7 +2,7 @@
 *	Innovus 17.11-s080_1 (64bit) 08/04/2017 11:13 (Linux 2.6.18-194.el5)
 *	
 *
-* 	Date & Time:	2021-Feb-10 20:23:25 (2021-Feb-10 19:23:25 GMT)
+* 	Date & Time:	2021-Feb-20 18:53:29 (2021-Feb-20 17:53:29 GMT)
 *
 *----------------------------------------------------------------------------------------
 *
@@ -18,7 +18,11 @@
 *
 *       User-Defined Activity : N.A.
 *
-*       Activity File: N.A.
+*	Switching Activity File used: 
+*	        ../vcd/risc_v_lite_rou.vcd
+*			Vcd Window used(Start Time, Stop Time):(2.27819e+19, 2.27819e+19) 
+*                     Vcd Scale Factor: 1 
+**                    Design annotation coverage: 0/7762 = 0% 
 *
 *       Hierarchical Global Activity: N.A.
 *
